@@ -1,0 +1,207 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\globalusings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\globalusings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\contracts\\validations\\pollrequestvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\contracts\\validations\\pollrequestvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\controllers\\pollscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\controllers\\pollscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\mapping\\mappingconfigurations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\mapping\\mappingconfigurations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\contracts\\pollresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\contracts\\pollresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\contracts\\pollrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\contracts\\pollrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\entities\\poll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\entities\\poll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\services\\pollservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\services\\pollservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\services\\ipollservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\services\\ipollservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DependencyInjection.cs",
+              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\DependencyInjection.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\DependencyInjection.cs",
+              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\DependencyInjection.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\DependencyInjection.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAgwAsAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-30T22:57:22.837Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Program.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\Program.cs",
+              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Program.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-27T16:55:15.842Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PollRequestValidator.cs",
+              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Contracts\\Validations\\PollRequestValidator.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\Contracts\\Validations\\PollRequestValidator.cs",
+              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Contracts\\Validations\\PollRequestValidator.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\Contracts\\Validations\\PollRequestValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-30T22:43:53.232Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PollsController.cs",
+              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Controllers\\PollsController.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\Controllers\\PollsController.cs",
+              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Controllers\\PollsController.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\Controllers\\PollsController.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAowB0AAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-27T16:56:15.971Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Poll.cs",
+              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Entities\\Poll.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\Entities\\Poll.cs",
+              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Entities\\Poll.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\Entities\\Poll.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-30T19:27:19.998Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PollResponse.cs",
+              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Contracts\\PollResponse.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\Contracts\\PollResponse.cs",
+              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Contracts\\PollResponse.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\Contracts\\PollResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-30T19:27:11.575Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PollRequest.cs",
+              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Contracts\\PollRequest.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\Contracts\\PollRequest.cs",
+              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Contracts\\PollRequest.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\Contracts\\PollRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-30T19:27:11.389Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "IPollService.cs",
+              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Services\\IPollService.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\Services\\IPollService.cs",
+              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Services\\IPollService.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\Services\\IPollService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T01:11:44.422Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PollService.cs",
+              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Services\\PollService.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\Services\\PollService.cs",
+              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Services\\PollService.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\Services\\PollService.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAIwCcAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-29T01:12:03.153Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GlobalUsings.cs",
+              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\GlobalUsings.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\GlobalUsings.cs",
+              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\GlobalUsings.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\GlobalUsings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-30T22:44:39.131Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MappingConfigurations.cs",
+              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Mapping\\MappingConfigurations.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\Mapping\\MappingConfigurations.cs",
+              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Mapping\\MappingConfigurations.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\Mapping\\MappingConfigurations.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-30T19:50:29.978Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
