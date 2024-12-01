@@ -12,6 +12,9 @@ global using FluentValidation.AspNetCore;
 global using MapsterMapper;
 global using SurveyBasket.Api;
 global using SurveyBasket.Api.Contracts.Validations;
+global using Microsoft.EntityFrameworkCore;
+global using SurveyBasket.Api.Presistence;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 
 
