@@ -19,7 +19,7 @@
     "Parameters": [
       {
         "Name": "poll",
-        "Type": "SurveyBasket.Api.Contracts.PollRequest",
+        "Type": "SurveyBasket.Api.Contracts.Polls.PollRequest",
         "IsRequired": true
       }
     ],
@@ -56,7 +56,7 @@
       },
       {
         "Name": "poll",
-        "Type": "SurveyBasket.Api.Contracts.PollRequest",
+        "Type": "SurveyBasket.Api.Contracts.Polls.PollRequest",
         "IsRequired": true
       }
     ],
@@ -89,6 +89,22 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.AuthController",
+    "Method": "LoginAsync",
+    "RelativePath": "Auth",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "SurveyBasket.Api.Contracts.Authentication.LoginRequest",
         "IsRequired": true
       }
     ],
