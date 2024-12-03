@@ -20,5 +20,9 @@ global using SurveyBasket.Api.Presistence.EntitiesConfigurations;
 global using Microsoft.AspNetCore.Identity;
 global using SurveyBasket.Api.Contracts.Authentication;
 global using SurveyBasket.Api.Authentication;
+global using SurveyBasket.Api.Abstractions;
+global using SurveyBasket.Api.Errors;
+
+
 
 

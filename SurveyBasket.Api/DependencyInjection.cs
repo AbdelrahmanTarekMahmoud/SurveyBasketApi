@@ -15,6 +15,12 @@ namespace SurveyBasket.Api
         {
             // Add services to the container.
             services.AddControllers();
+
+            //CORS part to include any origin (*) "Wildcard"
+            services.AddCors(options => options.
+            AddPolicy("Allow All", 
+            builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyHeader()));
+
             services.AddSwagerServices();
             services.AddMapsterServices();
             services.AddFluentValidationServices();

@@ -21,8 +21,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+//must be before Authorization
+app.UseCors("AllowAll");
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();

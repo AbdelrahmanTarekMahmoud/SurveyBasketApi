@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Authorization;
 using SurveyBasket.Api.Contracts.Polls;
+using System.Xml.Linq;
 
 namespace SurveyBasket.Api.Controllers
 {
@@ -22,35 +23,37 @@ namespace SurveyBasket.Api.Controllers
         public async Task<IActionResult> Get(int id , CancellationToken cancellationToken)
         {
             var element = await _pollService.GetAsync(id , cancellationToken);
-            return element is null ? NotFound() : Ok(element.Adapt<PollResponse>());
+            return element.IsFailure ?
+                Problem(statusCode : StatusCodes.Status404NotFound , title : element.Error.Code , detail : element.Error.Description)
+                : Ok(element.Value);
         }
         [HttpPost("")]
         public async Task<IActionResult> Add([FromBody] PollRequest poll , CancellationToken cancellationToken)
         {
-            var newPoll = await _pollService.AddAsync(poll.Adapt<Poll>());
-            return CreatedAtAction(nameof(Get), new { id = newPoll.Id }, newPoll.Adapt<PollResponse>());
+            var newPoll = await _pollService.AddAsync(poll , cancellationToken);
+            return CreatedAtAction(nameof(Get), new { id = newPoll.Value.Id }, newPoll.Value);
         }
 
         
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute]int id , [FromBody] PollRequest poll , CancellationToken cancellationToken)
         {
-            var isUpdated = await _pollService.UpdateAsync(id , poll.Adapt<Poll>() , cancellationToken);
-            if(!isUpdated) return NotFound();
+            var isUpdated = await _pollService.UpdateAsync(id , poll , cancellationToken);
+            if (isUpdated.IsFailure) return Problem(statusCode: StatusCodes.Status404NotFound, title: isUpdated.Error.Code, detail: isUpdated.Error.Description);
             return NoContent();
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute]int id , CancellationToken cancellationToken)
         {
             var isDeleted = await _pollService.DeleteAsync(id , cancellationToken);
-            if(!isDeleted) return NotFound();
+            if(isDeleted.IsFailure) return Problem(statusCode : StatusCodes.Status404NotFound , title:isDeleted.Error.Code , detail : isDeleted.Error.Description);
             return NoContent();
         }
         [HttpPut("{id}/TogglePublish")]
         public async Task<IActionResult> TogglePublish([FromRoute] int id , CancellationToken cancellationToken)
         {
             var state = await _pollService.TogglePublishedStateAsync(id, cancellationToken);
-            return state is false ? NotFound() : NoContent();
+            return state.IsFailure ? Problem(statusCode: StatusCodes.Status404NotFound, title: state.Error.Code, detail: state.Error.Description) : NoContent();
         }
     }
 }
