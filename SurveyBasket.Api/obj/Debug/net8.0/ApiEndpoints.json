@@ -95,6 +95,111 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "SurveyBasket.Api.Controllers.QuestionsController",
+    "Method": "Add",
+    "RelativePath": "api/polls/{pollId}/Questions",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "questionRequest",
+        "Type": "SurveyBasket.Api.Contracts.Questions.QuestionRequest",
+        "IsRequired": true
+      },
+      {
+        "Name": "pollId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.QuestionsController",
+    "Method": "GetAll",
+    "RelativePath": "api/polls/{pollId}/Questions",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pollId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.QuestionsController",
+    "Method": "Get",
+    "RelativePath": "api/polls/{pollId}/Questions/{questionId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pollId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "questionId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.QuestionsController",
+    "Method": "Update",
+    "RelativePath": "api/polls/{pollId}/Questions/{questionId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pollId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "questionId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "SurveyBasket.Api.Contracts.Questions.QuestionRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SurveyBasket.Api.Controllers.QuestionsController",
+    "Method": "ToggleStatus",
+    "RelativePath": "api/polls/{pollId}/Questions/{questionId}/ToggleStatus",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pollId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "questionId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SurveyBasket.Api.Controllers.AuthController",
     "Method": "LoginAsync",
     "RelativePath": "Auth",

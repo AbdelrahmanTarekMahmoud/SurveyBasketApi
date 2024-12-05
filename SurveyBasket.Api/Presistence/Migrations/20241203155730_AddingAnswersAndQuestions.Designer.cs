@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SurveyBasket.Api.Presistence;
 
@@ -11,9 +12,11 @@ using SurveyBasket.Api.Presistence;
 namespace SurveyBasket.Api.Presistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241203155730_AddingAnswersAndQuestions")]
+    partial class AddingAnswersAndQuestions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,10 +168,13 @@ namespace SurveyBasket.Api.Presistence.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
 
                     b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QustionId")
                         .HasColumnType("int");
 
                     b.Property<bool>("isActive")
@@ -176,7 +182,9 @@ namespace SurveyBasket.Api.Presistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestionId", "Content")
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("Content", "QustionId")
                         .IsUnique();
 
                     b.ToTable("Answers");

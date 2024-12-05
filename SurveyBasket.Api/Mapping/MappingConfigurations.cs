@@ -10,7 +10,8 @@ namespace SurveyBasket.Api.Mapping
             //but in Poll in entities its still title
             //config.NewConfig<Poll, PollResponse>()
             //     .Map(dest => dest.newName, src => src.OriginalName);
-
+            config.NewConfig<QuestionRequest, Question>()
+                .Map(dest => dest.Answers, src => src.Answers.Select(answer => new Answer { Content = answer })); 
 
         }
     }

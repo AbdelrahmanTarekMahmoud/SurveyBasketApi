@@ -28,6 +28,12 @@ namespace SurveyBasket.Api.Services
 
         public async Task<Result<PollResponse>> AddAsync(PollRequest pollRequest, CancellationToken cancellationToken)
         {
+            //Dealing with exception (duplicate)
+            var isExistingTitle = await _context.polls.AnyAsync(x=>x.Title == pollRequest.Title , cancellationToken);
+            if(isExistingTitle)
+            {
+                return Result.Failure<PollResponse>(PollErrors.DuplicatedTitle);
+            }
             var poll = pollRequest.Adapt<Poll>();
             await _context.polls.AddAsync(poll, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
@@ -35,14 +41,21 @@ namespace SurveyBasket.Api.Services
         }
 
         
-        public async Task<Result> UpdateAsync(int id, PollRequest poll, CancellationToken cancellationToken)
+        public async Task<Result> UpdateAsync(int id, PollRequest pollRequest, CancellationToken cancellationToken)
         {
-            var UpdatedPoll = await _context.polls.FindAsync(id);
+            //Dealing with exception (duplicate)
+            var isExistingTitle = await _context.polls.AnyAsync(x => x.Title == pollRequest.Title &&  x.Id != id
+              , cancellationToken);
+            if(isExistingTitle)
+            {
+                return Result.Failure(PollErrors.DuplicatedTitle);
+            }
+            var UpdatedPoll = await _context.polls.FindAsync(id , cancellationToken);
             if (UpdatedPoll is null) return Result.Failure(PollErrors.PollNotFound);
-            UpdatedPoll.Summary = poll.Summary;
-            UpdatedPoll.Title = poll.Title;
-            UpdatedPoll.StartsAt = poll.StartsAt;
-            UpdatedPoll.EndsAt = poll.EndsAt;
+            UpdatedPoll.Summary = pollRequest.Summary;
+            UpdatedPoll.Title = pollRequest.Title;
+            UpdatedPoll.StartsAt = pollRequest.StartsAt;
+            UpdatedPoll.EndsAt = pollRequest.EndsAt;
             await _context.SaveChangesAsync(cancellationToken);
             return Result.Success();
         }

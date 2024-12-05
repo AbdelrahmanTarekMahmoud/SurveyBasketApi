@@ -11,11 +11,23 @@ namespace SurveyBasket.Api.Presistence
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
         public DbSet<Poll> polls { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.ApplyConfiguration(new PollConfigurations()); 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            //changing delete behavior globally
+            var cascadeForeignKeys = modelBuilder.Model.GetEntityTypes().SelectMany(t => t.GetForeignKeys()).
+                Where(t => t.DeleteBehavior == DeleteBehavior.Cascade && !t.IsOwnership);
+
+            foreach (var foreignKey in cascadeForeignKeys)
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
             base.OnModelCreating(modelBuilder);
         }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

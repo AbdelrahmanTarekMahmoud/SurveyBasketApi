@@ -12,6 +12,8 @@ namespace SurveyBasket.Api.Entities
         public DateOnly StartsAt { get; set; }
         public DateOnly EndsAt { get; set; }
 
+        //navigation Property
+        public ICollection<Question> Questions { get; set; } = [];
        
     }
 }

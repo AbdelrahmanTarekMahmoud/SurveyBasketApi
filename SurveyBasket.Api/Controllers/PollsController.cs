@@ -30,16 +30,29 @@ namespace SurveyBasket.Api.Controllers
         [HttpPost("")]
         public async Task<IActionResult> Add([FromBody] PollRequest poll , CancellationToken cancellationToken)
         {
-            var newPoll = await _pollService.AddAsync(poll , cancellationToken);
-            return CreatedAtAction(nameof(Get), new { id = newPoll.Value.Id }, newPoll.Value);
+            var result = await _pollService.AddAsync(poll , cancellationToken);
+            //exception of duplicated titles
+            if(result.IsFailure)
+            {
+                return Problem(statusCode: StatusCodes.Status409Conflict, title: result.Error.Code, detail: result.Error.Description);
+            }
+            return CreatedAtAction(nameof(Get), new { id = result.Value.Id }, result.Value);
         }
 
         
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute]int id , [FromBody] PollRequest poll , CancellationToken cancellationToken)
         {
-            var isUpdated = await _pollService.UpdateAsync(id , poll , cancellationToken);
-            if (isUpdated.IsFailure) return Problem(statusCode: StatusCodes.Status404NotFound, title: isUpdated.Error.Code, detail: isUpdated.Error.Description);
+            var result = await _pollService.UpdateAsync(id , poll , cancellationToken);
+            if (result.IsFailure && result.Error == PollErrors.PollNotFound)
+            {
+                return Problem(statusCode: StatusCodes.Status404NotFound, title: result.Error.Code, detail: result.Error.Description);
+            }
+            if (result.IsFailure && result.Error == PollErrors.DuplicatedTitle)
+            {
+                return Problem(statusCode: StatusCodes.Status409Conflict, title: result.Error.Code, detail: result.Error.Description);
+            }
+            
             return NoContent();
         }
         [HttpDelete("{id}")]
