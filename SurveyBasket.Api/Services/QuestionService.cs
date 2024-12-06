@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SurveyBasket.Api.Contracts.Answers;
 using SurveyBasket.Api.Contracts.Questions;
 using System.Collections.Generic;
 
@@ -60,6 +61,44 @@ namespace SurveyBasket.Api.Services
             }
             return Result.Success<QuestionResponse>(Question);
         }
+
+
+
+        public async Task<Result<IEnumerable<QuestionResponse>>> GetAvailableAsync(int pollId, string userId , CancellationToken cancellationToken = default)
+        {
+            //checking if the user already voted in this poll
+            var isUserAlreadyVotedToPoll = await _context.Votes.AnyAsync
+                (x=>x.PollId == pollId && x.UserId == userId , cancellationToken);
+            if(isUserAlreadyVotedToPoll)
+            {
+                return Result.Failure<IEnumerable<QuestionResponse>>(VoteErrors.DuplicatedVote);
+            }
+            //check if the poll itself exist or not
+            var isPollExist = await _context.polls.AnyAsync(x => x.Id == pollId && x.IsPublished
+                && x.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow)
+                && x.EndsAt >= DateOnly.FromDateTime(DateTime.UtcNow)
+                , cancellationToken);
+            if(!isPollExist)
+            {
+                return Result.Failure<IEnumerable<QuestionResponse>>(PollErrors.PollNotFound);
+            }
+            //filter available questions(is active && in this poll) and filter withing the answers that is (is acitve = true)
+            var AvailableQuestion = await _context.Questions
+                .Where(x=> x.PollId == pollId && x.isActive)
+                .Include(x=>x.Answers)
+                .Select(x=> new QuestionResponse(
+                
+                     x.Id,
+                     x.Content,
+                     x.Answers.Where(x=>x.isActive).Select(x => new Contracts.Answers.AnswerResponse(x.Id , x.Content))
+                ))
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+
+            return Result.Success<IEnumerable<QuestionResponse>>(AvailableQuestion);
+        }
+
+
 
         public async Task<Result> ToggleActiveStatus(int pollId, int questionId, CancellationToken cancellationToken = default)
         {

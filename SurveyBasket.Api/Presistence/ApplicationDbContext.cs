@@ -13,6 +13,8 @@ namespace SurveyBasket.Api.Presistence
         public DbSet<Poll> polls { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
+        public DbSet<Vote> Votes { get; set; }
+        public DbSet<VoteAnswer> VoteAnswers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,7 +35,7 @@ namespace SurveyBasket.Api.Presistence
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             //extract the user id using the interface _httpContextAccessor 
-            var UserId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var UserId = _httpContextAccessor.HttpContext?.User.GetUserId();
             //track only entites which inherits from "AuditableEntity"
             var entries = ChangeTracker.Entries<AuditableEntity>();
             foreach (var entry in entries)

@@ -4,6 +4,7 @@ namespace SurveyBasket.Api.Entities
 {
     public sealed class Poll : AuditableEntity
     {
+        //primary key
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Summary { get; set; } = string.Empty;
@@ -14,6 +15,7 @@ namespace SurveyBasket.Api.Entities
 
         //navigation Property
         public ICollection<Question> Questions { get; set; } = [];
-       
+        public ICollection<Vote> Votes { get; set; } = [];
+
     }
 }

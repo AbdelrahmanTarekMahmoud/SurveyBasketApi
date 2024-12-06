@@ -78,5 +78,17 @@ namespace SurveyBasket.Api.Services
             return Result.Success();
             
         }
+
+        public async Task<IEnumerable<PollResponse>> GetCurrentAsync(CancellationToken cancellationToken = default)
+        {
+            var PublishedPolls = await _context.polls.AsNoTracking()
+                .Where(x => x.IsPublished == true 
+                && x.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow)
+                && x.EndsAt >= DateOnly.FromDateTime(DateTime.UtcNow))
+                .Select(x=>x.Adapt<PollResponse>())
+                .ToListAsync(cancellationToken);
+
+            return PublishedPolls;
+        }
     }
 }

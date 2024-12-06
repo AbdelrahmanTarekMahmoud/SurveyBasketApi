@@ -3,7 +3,7 @@
     public static class UserErrors
     {
         public static readonly Error  InvalidCredentials = 
-         new("User.InvalidCredentials", "Invalid UserName / Password");
+         new("User.InvalidCredentials", "Invalid UserName / Password" , StatusCodes.Status401Unauthorized);
 
     }
 }
