@@ -15,6 +15,7 @@ namespace SurveyBasket.Api.Controllers
 
 
         [HttpGet("{questionId}")]
+       
         public async Task<IActionResult> Get([FromRoute] int pollId, [FromRoute] int questionId,CancellationToken cancellationToken)
         {
             var result = await _questionService.GetAsync(pollId, questionId, cancellationToken);

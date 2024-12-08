@@ -25,6 +25,8 @@ global using Microsoft.AspNetCore.Authorization;
 global using SurveyBasket.Api.Extentsion;
 global using System.Security.Claims;
 global using System.Xml.Linq;
+global using  SurveyBasket.Api.Contracts.Results;
+
 
 
 

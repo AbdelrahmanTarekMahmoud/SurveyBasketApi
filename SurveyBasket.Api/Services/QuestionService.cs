@@ -5,9 +5,12 @@ using System.Collections.Generic;
 
 namespace SurveyBasket.Api.Services
 {
-    public class QuestionService(ApplicationDbContext context) : IQuestionService
+    public class QuestionService(ApplicationDbContext context , ICacheService cacheService , ILogger<QuestionService> logger) : IQuestionService
     {
         private readonly ApplicationDbContext _context = context;
+        private readonly ICacheService _cacheService = cacheService;
+        private readonly ILogger<QuestionService> _logger = logger;
+        private const string _cachePrefix = "Questions";
 
         public async Task<Result<QuestionResponse>> AddAsync(QuestionRequest questionRequest, int pollId,  CancellationToken cancellationToken = default)
         {
@@ -32,6 +35,8 @@ namespace SurveyBasket.Api.Services
 
             await _context.AddAsync(Question , cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
+
+            await _cacheService.RemoveAsync($"{_cachePrefix}-{pollId}" , cancellationToken);
 
             return Result.Success<QuestionResponse>(Question.Adapt<QuestionResponse>());
         }
@@ -82,18 +87,34 @@ namespace SurveyBasket.Api.Services
             {
                 return Result.Failure<IEnumerable<QuestionResponse>>(PollErrors.PollNotFound);
             }
-            //filter available questions(is active && in this poll) and filter withing the answers that is (is acitve = true)
-            var AvailableQuestion = await _context.Questions
-                .Where(x=> x.PollId == pollId && x.isActive)
-                .Include(x=>x.Answers)
-                .Select(x=> new QuestionResponse(
-                
-                     x.Id,
-                     x.Content,
-                     x.Answers.Where(x=>x.isActive).Select(x => new Contracts.Answers.AnswerResponse(x.Id , x.Content))
-                ))
-                .AsNoTracking()
-                .ToListAsync(cancellationToken);
+
+            var cachKey = $"{_cachePrefix}-{pollId}";
+            var cachedQuestions = await _cacheService.GetAsync<IEnumerable<QuestionResponse>>(cachKey, cancellationToken);
+            IEnumerable<QuestionResponse> AvailableQuestion = [];
+
+            if (cachedQuestions is null)
+            {
+                _logger.LogInformation("From DataBase");
+                //filter available questions(is active && in this poll) and filter withing the answers that is (is acitve = true)
+                     AvailableQuestion = await _context.Questions
+                    .Where(x => x.PollId == pollId && x.isActive)
+                    .Include(x => x.Answers)
+                    .Select(x => new QuestionResponse(
+
+                         x.Id,
+                         x.Content,
+                         x.Answers.Where(x => x.isActive).Select(x => new Contracts.Answers.AnswerResponse(x.Id, x.Content))
+                    ))
+                    .AsNoTracking()
+                    .ToListAsync(cancellationToken);
+
+                await _cacheService.SetAsync(cachKey, AvailableQuestion, cancellationToken);
+            }
+            else
+            {
+                _logger.LogInformation("From Cache");
+                AvailableQuestion = cachedQuestions;
+            }
 
             return Result.Success<IEnumerable<QuestionResponse>>(AvailableQuestion);
         }
@@ -106,6 +127,7 @@ namespace SurveyBasket.Api.Services
             if (question is null) return Result.Failure(QuestionsErrors.QuestionNoFound);
             question.isActive = !question.isActive;
             await _context.SaveChangesAsync(cancellationToken);
+            await _cacheService.RemoveAsync($"{_cachePrefix}-{pollId}", cancellationToken);
             return Result.Success();
 
 
@@ -164,6 +186,7 @@ namespace SurveyBasket.Api.Services
                 answer.isActive = questionRequest.Answers.Contains(answer.Content);
             });
             await _context.SaveChangesAsync();
+            await _cacheService.RemoveAsync($"{_cachePrefix}-{pollId}", cancellationToken);
             return Result.Success(cancellationToken);
         }
     }
