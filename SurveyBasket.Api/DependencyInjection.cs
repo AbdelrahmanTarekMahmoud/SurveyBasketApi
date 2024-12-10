@@ -4,6 +4,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using SurveyBasket.Api.Authentication;
+using SurveyBasket.Api.Setting;
 using System.Text;
 
 namespace SurveyBasket.Api
@@ -36,10 +37,14 @@ namespace SurveyBasket.Api
             services.AddScoped<IVoteService, VoteService>();
             services.AddScoped<IResultService , ResultService>();
             services.AddScoped<ICacheService , CacheService>();
+            services.AddScoped<IEmailSender , EmailService>();
 
             services.AddExceptionHandler<GlobalExceptionHandler>();
             services.AddProblemDetails();
 
+            services.AddHttpContextAccessor(); 
+
+            services.Configure<MailSettings>(configuration.GetSection(nameof(MailSettings)));
             return services;
         }
         private static IServiceCollection AddSwagerServices(this IServiceCollection services)
@@ -67,7 +72,8 @@ namespace SurveyBasket.Api
         IConfiguration configuration)
         {
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
             services.AddSingleton<IJwtProvider, JwtProvider>();
             //data annotaion validating in JwtOptions
             services.AddOptions<JwtOptions>().BindConfiguration(JwtOptions.SectionName).ValidateDataAnnotations()
@@ -95,7 +101,12 @@ namespace SurveyBasket.Api
                     ValidAudience = setting.Audience
                 };
             });
-
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 8;
+                options.SignIn.RequireConfirmedEmail = true;
+                options.User.RequireUniqueEmail = true;
+            });
             return services;
         }
 

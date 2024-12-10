@@ -167,3 +167,8 @@ D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\System.IO
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\System.Text.Encodings.Web.dll
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\System.Text.Json.dll
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\MailKit.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\MimeKit.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
