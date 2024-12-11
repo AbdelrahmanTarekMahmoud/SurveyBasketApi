@@ -1,12 +1,4 @@
 ﻿
-
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using SurveyBasket.Api.Authentication;
-using SurveyBasket.Api.Setting;
-using System.Text;
-
 namespace SurveyBasket.Api
 {
     public static class DependencyInjection
@@ -26,6 +18,7 @@ namespace SurveyBasket.Api
             services.AddMapsterServices();
             services.AddFluentValidationServices();
             services.AddAuthConfig(configuration);
+            services.AddHangFireServices(configuration);
 
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
@@ -38,6 +31,7 @@ namespace SurveyBasket.Api
             services.AddScoped<IResultService , ResultService>();
             services.AddScoped<ICacheService , CacheService>();
             services.AddScoped<IEmailSender , EmailService>();
+            services.AddScoped<INotificationService ,  NotificationService>();
 
             services.AddExceptionHandler<GlobalExceptionHandler>();
             services.AddProblemDetails();
@@ -110,5 +104,18 @@ namespace SurveyBasket.Api
             return services;
         }
 
+        private static IServiceCollection AddHangFireServices(this IServiceCollection services , IConfiguration configuration)
+        {
+            // Add Hangfire services.
+            services.AddHangfire(config => config
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UseSqlServerStorage(configuration.GetConnectionString("HangfireConnection")));
+
+            // Add the processing server as IHostedService
+            services.AddHangfireServer();
+            return services;
+        }
     }
 }

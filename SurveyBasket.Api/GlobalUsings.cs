@@ -26,9 +26,13 @@ global using SurveyBasket.Api.Extentsion;
 global using System.Security.Claims;
 global using System.Xml.Linq;
 global using  SurveyBasket.Api.Contracts.Results;
-global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Identity.UI.Services;
-
+global using Hangfire;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.IdentityModel.Tokens;
+global using SurveyBasket.Api.Setting;
+global using System.Text;
 
 
 

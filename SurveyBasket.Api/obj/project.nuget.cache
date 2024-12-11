@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XWof5siRcr4=",
+  "dgSpecHash": "5GswfbnCL8Y=",
   "success": true,
   "projectFilePath": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\SurveyBasket.Api.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,11 @@
     "C:\\Users\\abdel\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512",
     "C:\\Users\\abdel\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.0\\fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
     "C:\\Users\\abdel\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.11.0\\fluentvalidation.dependencyinjectionextensions.11.11.0.nupkg.sha512",
+    "C:\\Users\\abdel\\.nuget\\packages\\hangfire.aspnetcore\\1.8.17\\hangfire.aspnetcore.1.8.17.nupkg.sha512",
+    "C:\\Users\\abdel\\.nuget\\packages\\hangfire.core\\1.8.17\\hangfire.core.1.8.17.nupkg.sha512",
+    "C:\\Users\\abdel\\.nuget\\packages\\hangfire.dashboard.basic.authentication\\7.0.1\\hangfire.dashboard.basic.authentication.7.0.1.nupkg.sha512",
+    "C:\\Users\\abdel\\.nuget\\packages\\hangfire.netcore\\1.8.17\\hangfire.netcore.1.8.17.nupkg.sha512",
+    "C:\\Users\\abdel\\.nuget\\packages\\hangfire.sqlserver\\1.8.17\\hangfire.sqlserver.1.8.17.nupkg.sha512",
     "C:\\Users\\abdel\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\abdel\\.nuget\\packages\\mailkit\\4.9.0\\mailkit.4.9.0.nupkg.sha512",
     "C:\\Users\\abdel\\.nuget\\packages\\mapster\\7.4.0\\mapster.7.4.0.nupkg.sha512",
@@ -63,6 +68,7 @@
     "C:\\Users\\abdel\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\abdel\\.nuget\\packages\\mimekit\\4.9.0\\mimekit.4.9.0.nupkg.sha512",
     "C:\\Users\\abdel\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\abdel\\.nuget\\packages\\newtonsoft.json\\11.0.1\\newtonsoft.json.11.0.1.nupkg.sha512",
     "C:\\Users\\abdel\\.nuget\\packages\\serilog\\4.2.0-dev-02328\\serilog.4.2.0-dev-02328.nupkg.sha512",
     "C:\\Users\\abdel\\.nuget\\packages\\serilog.aspnetcore\\9.0.0-dev-02301\\serilog.aspnetcore.9.0.0-dev-02301.nupkg.sha512",
     "C:\\Users\\abdel\\.nuget\\packages\\serilog.extensions.hosting\\9.0.0-dev-02303\\serilog.extensions.hosting.9.0.0-dev-02303.nupkg.sha512",

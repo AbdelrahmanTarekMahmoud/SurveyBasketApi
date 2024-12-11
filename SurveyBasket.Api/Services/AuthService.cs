@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using SurveyBasket.Api.Errors;
 using SurveyBasket.Api.Helper;
 using System.Text;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace SurveyBasket.Api.Services
 {
@@ -80,16 +81,8 @@ namespace SurveyBasket.Api.Services
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 _logger.LogInformation("Conformation Code is : {c}" , code);
 
-                //https:/./surveybasket.com
-                var origin = _httpContextAccessor.HttpContext?.Request.Headers.Origin;
-
-                var emailBody = EmailBodyBuilder.GenerateEmailBody("EmailConfirmation",
-                    new Dictionary<string, string>
-                    {
-                        {"{{name}}" , user.FirstName},
-                        {"{{action_url}}" , $"{origin}/auth/emailConfirmation?userId={user.Id}&code={code}"}
-                    });
-                await _emailSender.SendEmailAsync(user.Email!, "Survey Basket Confirmation Email", emailBody);
+                
+                await SendConfirmationEmail(user, code);
 
 
                 return Result.Success();
@@ -152,17 +145,24 @@ namespace SurveyBasket.Api.Services
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             _logger.LogInformation("Conformation Code is : {c}", code);
 
+            await SendConfirmationEmail(user, code);
+
+            return Result.Success();
+        }
+
+        public async Task SendConfirmationEmail(ApplicationUser user , string code)
+        {
+            //https:/./surveybasket.com
             var origin = _httpContextAccessor.HttpContext?.Request.Headers.Origin;
 
             var emailBody = EmailBodyBuilder.GenerateEmailBody("EmailConfirmation",
                 new Dictionary<string, string>
                 {
-                        {"{{name}}" , user.FirstName},
+                    {"{{name}}" , user.FirstName},
                         {"{{action_url}}" , $"{origin}/auth/emailConfirmation?userId={user.Id}&code={code}"}
                 });
-            await _emailSender.SendEmailAsync(user.Email!, "Survey Basket Confirmation Email", emailBody);
-
-            return Result.Success();
+            BackgroundJob.Enqueue(() => _emailSender.SendEmailAsync(user.Email!, "Survey Basket Confirmation Email", emailBody)); 
+            await Task.CompletedTask;
         }
     }
 }

@@ -1,5 +1,6 @@
 
 
+using HangfireBasicAuthenticationFilter;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using SurveyBasket.Api.Presistence;
@@ -26,6 +27,24 @@ if (app.Environment.IsDevelopment())
 }
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
+app.UseHangfireDashboard("/dashboard", new DashboardOptions
+{
+    Authorization =
+    [
+        new HangfireCustomBasicAuthenticationFilter
+        {
+            User = app.Configuration.GetValue<string>("HangFireSettings:UserName"),
+            Pass = app.Configuration.GetValue<string>("HangFireSettings:Password"),
+        }
+    ],
+    //DashboardTitle = "Survey Basket DashBoard for Background Jobs"
+});
+
+//first we need to get the services
+var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+using var AllServices = scopeFactory.CreateScope();
+var NotificationService = AllServices.ServiceProvider.GetRequiredService<INotificationService>();
+RecurringJob.AddOrUpdate("NewPollsNotification", () => NotificationService.NewPollsNotification(), Cron.Daily);
 //must be before Authorization
 app.UseCors("AllowAll");
 app.UseAuthorization();
