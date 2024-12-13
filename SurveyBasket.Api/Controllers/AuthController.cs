@@ -45,5 +45,22 @@ namespace SurveyBasket.Api.Controllers
             return Result.IsSuccess ? Ok() : Result.ToProblem();
         }
 
+        [HttpPost("send-forgetpasswordcode-email")]
+        public async Task<IActionResult> SendForgetPasswordEmail([FromBody] ForgetPasswordRequest request, CancellationToken cancellationToken)
+        {
+
+            var Result = await _authService.SendForgetPasswordCode(request , cancellationToken);
+            return Result.IsSuccess ? Ok() : Result.ToProblem();
+        }
+
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request, CancellationToken cancellationToken)
+        {
+
+            var Result = await _authService.ResetPasswordForForgettingPassword(request, cancellationToken);
+            return Result.IsSuccess ? Ok() : Result.ToProblem();
+        }
+
     }
 }

@@ -39,7 +39,7 @@ namespace SurveyBasket.Api.Services
             _logger.LogInformation("Sending email using SMTP Host: {Host} and Port: {Port}{password}", _mailSettings.Host, _mailSettings.Port , _mailSettings.Password);
 
 
-            smtp.Connect(_mailSettings.Host , _mailSettings.Port , SecureSocketOptions.StartTls);
+            smtp.Connect(_mailSettings.Host , _mailSettings.Port , SecureSocketOptions.None);
             //smtp.Connect("smtp.ethereal.email", 587, SecureSocketOptions.StartTls);
 
             

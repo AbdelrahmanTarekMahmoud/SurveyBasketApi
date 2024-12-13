@@ -12,5 +12,9 @@ namespace SurveyBasket.Api.Services
         Task<Result> ConfirmEmailAsync(ConfirmEmailRequest confirmEmailRequest);
 
         Task<Result> ResendEmailConfirmationAsync(ResendEmailConfirmationRequest resendEmailConfirmationRequest);
+
+        Task<Result> SendForgetPasswordCode(ForgetPasswordRequest request, CancellationToken cancellationToken = default);
+
+        Task<Result> ResetPasswordForForgettingPassword(ResetPasswordRequest reset, CancellationToken cancellationToken = default);
     }
 }

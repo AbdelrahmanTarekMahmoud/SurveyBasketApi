@@ -32,6 +32,7 @@ namespace SurveyBasket.Api
             services.AddScoped<ICacheService , CacheService>();
             services.AddScoped<IEmailSender , EmailService>();
             services.AddScoped<INotificationService ,  NotificationService>();
+            services.AddScoped<IUserService , UserService>();
 
             services.AddExceptionHandler<GlobalExceptionHandler>();
             services.AddProblemDetails();

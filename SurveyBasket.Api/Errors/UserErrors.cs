@@ -17,5 +17,11 @@
         public static readonly Error UserAlreadyConfirmed =
          new("User.UserAlreadyConfirmed", "This user is already confirmed", StatusCodes.Status401Unauthorized);
 
+        public static readonly Error UserDoesnotExist =
+         new("User.UserDoesnotExist", "This user is already confirmed", StatusCodes.Status409Conflict);
+
+        public static readonly Error InvalidCode =
+         new("User.InvalidCode", "The code you entered is wrong", StatusCodes.Status400BadRequest);
+
     }
 }

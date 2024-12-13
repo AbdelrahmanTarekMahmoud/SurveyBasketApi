@@ -150,6 +150,7 @@ namespace SurveyBasket.Api.Services
             return Result.Success();
         }
 
+        //helper method
         public async Task SendConfirmationEmail(ApplicationUser user , string code)
         {
             //https:/./surveybasket.com
@@ -163,6 +164,70 @@ namespace SurveyBasket.Api.Services
                 });
             BackgroundJob.Enqueue(() => _emailSender.SendEmailAsync(user.Email!, "Survey Basket Confirmation Email", emailBody)); 
             await Task.CompletedTask;
+        }
+
+        public async Task<Result> SendForgetPasswordCode(ForgetPasswordRequest request, CancellationToken cancellationToken = default)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if(user is null)
+            {
+                //misleading
+                return Result.Success();
+            }
+
+            if(!user.EmailConfirmed)
+            {
+                return Result.Failure(UserErrors.EmailNotConfirmed);
+            }
+
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            _logger.LogInformation("Reset  Code is : {c}", code);
+
+            await SendForgetPasswordCodeEmail(user, code);
+
+            return Result.Success();
+        }
+
+        //helper method
+        public async Task SendForgetPasswordCodeEmail(ApplicationUser user, string code)
+        {
+            //https:/./surveybasket.com
+            var origin = _httpContextAccessor.HttpContext?.Request.Headers.Origin;
+
+            var emailBody = EmailBodyBuilder.GenerateEmailBody("ForgetPassword",
+                new Dictionary<string, string>
+                {
+                    {"{{name}}" , user.FirstName},
+                        {"{{action_url}}" , $"{origin}/auth/forgetPassword?email={user.Email}&code={code}"}
+                });
+            BackgroundJob.Enqueue(() => _emailSender.SendEmailAsync(user.Email!, "Survey Basket PasswordReset", emailBody));
+            await Task.CompletedTask;
+        }
+
+        public async Task<Result> ResetPasswordForForgettingPassword(ResetPasswordRequest request, CancellationToken cancellationToken = default)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if(user is null || !user.EmailConfirmed)
+            {
+                Result.Failure(UserErrors.InvalidCode);
+            }
+
+            IdentityResult result;
+            try
+            {
+                var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(request.Code));
+                result = await _userManager.ResetPasswordAsync(user, code, request.NewPassword);
+            }
+            catch(FormatException)
+            {
+                result = IdentityResult.Failed(_userManager.ErrorDescriber.InvalidToken());
+            }
+            if (result.Succeeded) return Result.Success();
+
+            var error = result.Errors.FirstOrDefault();
+
+            return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status401Unauthorized));
         }
     }
 }
