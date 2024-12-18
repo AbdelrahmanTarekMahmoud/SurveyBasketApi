@@ -1,4 +1,6 @@
 ﻿
+using SurveyBasket.Api.Authentication.Filters;
+
 namespace SurveyBasket.Api
 {
     public static class DependencyInjection
@@ -33,6 +35,7 @@ namespace SurveyBasket.Api
             services.AddScoped<IEmailSender , EmailService>();
             services.AddScoped<INotificationService ,  NotificationService>();
             services.AddScoped<IUserService , UserService>();
+            services.AddScoped<IRoleService , RoleService>();
 
             services.AddExceptionHandler<GlobalExceptionHandler>();
             services.AddProblemDetails();
@@ -66,9 +69,12 @@ namespace SurveyBasket.Api
         private static IServiceCollection AddAuthConfig(this IServiceCollection services,
         IConfiguration configuration)
         {
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddTransient<IAuthorizationHandler , PermissionAuthorizationHandler>();
+            services.AddTransient<IAuthorizationPolicyProvider ,  PermissionAuthorizationPolicyProvider>(); 
             services.AddSingleton<IJwtProvider, JwtProvider>();
             //data annotaion validating in JwtOptions
             services.AddOptions<JwtOptions>().BindConfiguration(JwtOptions.SectionName).ValidateDataAnnotations()

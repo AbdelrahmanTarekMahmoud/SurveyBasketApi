@@ -2,20 +2,21 @@
 
 using Microsoft.AspNetCore.Authorization;
 using SurveyBasket.Api.Abstractions;
+using SurveyBasket.Api.Authentication.Filters;
 using SurveyBasket.Api.Entities;
 
 namespace SurveyBasket.Api.Controllers
 {
     [Route("api/polls/{pollId}/[controller]")]
     [ApiController]
-    [Authorize]
+    
     public class QuestionsController(IQuestionService questionService) : ControllerBase
     {
         private readonly IQuestionService _questionService = questionService;
 
 
         [HttpGet("{questionId}")]
-       
+        [HasPermission(Permissions.GetQuestions)]
         public async Task<IActionResult> Get([FromRoute] int pollId, [FromRoute] int questionId,CancellationToken cancellationToken)
         {
             var result = await _questionService.GetAsync(pollId, questionId, cancellationToken);
@@ -25,6 +26,7 @@ namespace SurveyBasket.Api.Controllers
 
 
         [HttpPost("")]
+        [HasPermission(Permissions.AddQuestions)]
         public async Task<IActionResult> Add([FromBody]QuestionRequest questionRequest , [FromRoute]int pollId, CancellationToken cancellationToken)
         {
             var result = await _questionService.AddAsync(questionRequest , pollId, cancellationToken);
@@ -36,6 +38,7 @@ namespace SurveyBasket.Api.Controllers
 
 
         [HttpGet("")]
+        [HasPermission(Permissions.GetQuestions)]
         public async Task<IActionResult> GetAll([FromRoute] int pollId, CancellationToken cancellationToken)
         {
             var result = await _questionService.GetAllAsync(pollId , cancellationToken);
@@ -44,6 +47,7 @@ namespace SurveyBasket.Api.Controllers
         }
 
         [HttpPut("{questionId}/ToggleStatus")]
+        [HasPermission(Permissions.UpdateQuestions)]
         public async Task<IActionResult> ToggleStatus([FromRoute] int pollId, [FromRoute] int questionId, CancellationToken cancellationToken)
         {
             var result = await _questionService.ToggleActiveStatus(pollId, questionId , cancellationToken);
@@ -51,6 +55,7 @@ namespace SurveyBasket.Api.Controllers
         }
 
         [HttpPut("{questionId}")]
+        [HasPermission(Permissions.UpdateQuestions)]
         public async Task<IActionResult> Update([FromRoute] int pollId , [FromRoute] int questionId , [FromBody] QuestionRequest request , CancellationToken cancellationToken)
         {
             var result = await _questionService.UpdateAsync(pollId , questionId , request , cancellationToken);

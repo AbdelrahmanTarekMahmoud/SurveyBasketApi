@@ -12,7 +12,7 @@ namespace SurveyBasket.Api.Services
 {
     public class AuthService(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager 
         ,IJwtProvider jwtProvider , ILogger<AuthService> logger , IEmailSender emailSender
-        ,IHttpContextAccessor httpContextAccessor) : IAuthService
+        ,IHttpContextAccessor httpContextAccessor , ApplicationDbContext context) : IAuthService
     {
         private readonly UserManager<ApplicationUser> _userManager = userManager;
         private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
@@ -20,6 +20,7 @@ namespace SurveyBasket.Api.Services
         private readonly ILogger<AuthService> _logger = logger;
         private readonly IEmailSender _emailSender = emailSender;
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+        private readonly ApplicationDbContext _context = context;
 
         public async Task<Result<AuthResponse>> GetTokenAsync(string Email, string Password, CancellationToken cancellationToken = default)
         {
@@ -41,10 +42,21 @@ namespace SurveyBasket.Api.Services
             //    return  Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);  
             //}
             var result = await _signInManager.PasswordSignInAsync(user , Password, false , false);
+            
             if (result.Succeeded)
             {
+                var UserRoles = await _userManager.GetRolesAsync(user);
+                var Permissions = await _context.Roles
+                    .Join(_context.RoleClaims
+                    , role => role.Id, claim => claim.RoleId,
+                    (role, claim) => new { role, claim }).
+                    Where(AnonymousObj => UserRoles.Contains(AnonymousObj.role.Name))
+                    .Select(AnonymousObj => AnonymousObj.claim.ClaimValue)
+                    .Distinct()
+                    .ToListAsync(cancellationToken);
+
                 //Generate Token
-                var (token, expireIn) = _jwtProvider.GenerateToken(user);
+                var (token, expireIn) = _jwtProvider.GenerateToken(user , UserRoles , Permissions);
                 var response = new AuthResponse(user.Id, user.Email, user.FirstName, user.LastName, token, expireIn);
                 return Result.Success<AuthResponse>(response);
             }
@@ -122,6 +134,7 @@ namespace SurveyBasket.Api.Services
 
             if (result.Succeeded)
             {
+                await _userManager.AddToRoleAsync(user, DefaultRoles.Member);
                 return Result.Success();
             }
             //get only the first error (identity result not our built result class)
@@ -207,6 +220,7 @@ namespace SurveyBasket.Api.Services
 
         public async Task<Result> ResetPasswordForForgettingPassword(ResetPasswordRequest request, CancellationToken cancellationToken = default)
         {
+          
             var user = await _userManager.FindByEmailAsync(request.Email);
             if(user is null || !user.EmailConfirmed)
             {

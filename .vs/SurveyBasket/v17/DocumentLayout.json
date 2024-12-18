@@ -3,8 +3,24 @@
   "WorkspaceRootPath": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\services\\roleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\services\\roleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\abstractions\\constants\\permissions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\abstractions\\constants\\permissions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\services\\iroleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\services\\iroleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|d:\\abdo\\surveybasketapi\\surveybasket\\surveybasket.api\\errors\\roleerrors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{725FB875-E528-4694-9BEE-E84D8FB20B69}|SurveyBasket.Api\\SurveyBasket.Api.csproj|solutionrelative:surveybasket.api\\errors\\roleerrors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,19 +30,71 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Services\\UserService.cs",
-              "RelativeDocumentMoniker": "SurveyBasket.Api\\Services\\UserService.cs",
-              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Services\\UserService.cs",
-              "RelativeToolTip": "SurveyBasket.Api\\Services\\UserService.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwCMAAAASAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "Permissions.cs",
+              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Abstractions\\Constants\\Permissions.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\Abstractions\\Constants\\Permissions.cs",
+              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Abstractions\\Constants\\Permissions.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\Abstractions\\Constants\\Permissions.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAxwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-13T10:27:02.54Z",
+              "WhenOpened": "2024-12-18T14:47:26.288Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IRoleService.cs",
+              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Services\\IRoleService.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\Services\\IRoleService.cs",
+              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Services\\IRoleService.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\Services\\IRoleService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-18T01:20:53.134Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RoleService.cs",
+              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Services\\RoleService.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\Services\\RoleService.cs",
+              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Services\\RoleService.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\Services\\RoleService.cs",
+              "ViewState": "AgIAAJgAAAAAAAAAAAAuwK8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-17T11:24:01.193Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RoleErrors.cs",
+              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Errors\\RoleErrors.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\Errors\\RoleErrors.cs",
+              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Errors\\RoleErrors.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\Errors\\RoleErrors.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-17T14:52:24.943Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RolesController.cs",
+              "DocumentMoniker": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Controllers\\RolesController.cs",
+              "RelativeDocumentMoniker": "SurveyBasket.Api\\Controllers\\RolesController.cs",
+              "ToolTip": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\Controllers\\RolesController.cs",
+              "RelativeToolTip": "SurveyBasket.Api\\Controllers\\RolesController.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAuwDMAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-17T14:15:03.031Z",
               "EditorCaption": ""
             }
           ]
