@@ -31,6 +31,11 @@ namespace SurveyBasket.Api.Services
                return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
             }
 
+            //added in sec 25
+            if(user.IsDisabled)
+            {
+                return Result.Failure<AuthResponse>(UserErrors.UserIsDisabled);
+            }
             //we can check also that way instead of isNotAllowed
             //if(!user.EmailConfirmed) return Result.Failure<AuthResponse>(UserErrors.EmailNotConfirmed);
 
@@ -41,7 +46,7 @@ namespace SurveyBasket.Api.Services
             //{ 
             //    return  Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);  
             //}
-            var result = await _signInManager.PasswordSignInAsync(user , Password, false , false);
+            var result = await _signInManager.PasswordSignInAsync(user , Password, false , true);
             
             if (result.Succeeded)
             {
@@ -63,8 +68,12 @@ namespace SurveyBasket.Api.Services
             //if code continues here there is 2 reasons
             //1-passowrd or email are invalid
             //2-User didnt confirm the email yet
+            //3-User lockedout
 
-            return Result.Failure<AuthResponse>(result.IsNotAllowed ? UserErrors.EmailNotConfirmed : UserErrors.InvalidCredentials);
+            var error = result.IsNotAllowed ? UserErrors.EmailNotConfirmed
+                : result.IsLockedOut ? UserErrors.UserIsLockedOut : UserErrors.InvalidCredentials;
+
+            return Result.Failure<AuthResponse>(error);
             
         }
 

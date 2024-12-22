@@ -116,7 +116,7 @@ namespace SurveyBasket.Api.Services
 
             if (request.Permissions.Except(ExistedPermissions).Any())
             {
-                return Result.Failure<RoleDetailsResponse>(RoleErrors.RoleDuplicated);
+                return Result.Failure<RoleDetailsResponse>(RoleErrors.PermissionsInvalid);
             }
 
             role.Name = request.Name;

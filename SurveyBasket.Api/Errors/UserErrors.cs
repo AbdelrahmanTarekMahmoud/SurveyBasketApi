@@ -23,5 +23,13 @@
         public static readonly Error InvalidCode =
          new("User.InvalidCode", "The code you entered is wrong", StatusCodes.Status400BadRequest);
 
+        public static readonly Error UserIsDisabled =
+         new("User.UserIsDisabled", "User is Disabled", StatusCodes.Status401Unauthorized);
+
+        public static readonly Error UserIsLockedOut =
+         new("User.UserIsLockedOut", "User is Locked Out try again later!", StatusCodes.Status401Unauthorized);
+
+        public static readonly Error UserNotFound =
+         new("User.UserNotFound", "User  is not exist", StatusCodes.Status401Unauthorized);
     }
 }
