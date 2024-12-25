@@ -192,3 +192,5 @@ D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\tr-TR\Han
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\zh-TW\Hangfire.Core.resources.dll
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\zh\Hangfire.Core.resources.dll
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\HangfireBasicAuthenticationFilter.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\System.Linq.Dynamic.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\System.Linq.Dynamic.Core.dll

@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SurveyBasket.Api.Contracts.Answers;
+using SurveyBasket.Api.Contracts.Common;
 using SurveyBasket.Api.Contracts.Questions;
 using System.Collections.Generic;
+using System.Linq.Dynamic.Core;
 
 namespace SurveyBasket.Api.Services
 {
@@ -41,18 +43,51 @@ namespace SurveyBasket.Api.Services
             return Result.Success<QuestionResponse>(Question.Adapt<QuestionResponse>());
         }
 
-        public async Task<Result<IEnumerable<QuestionResponse>>> GetAllAsync(int pollId , CancellationToken cancellationToken = default)
+        public async Task<Result<PaginatedList<QuestionResponse>>> GetAllAsync(int pollId , RequestFilter pageFilter , CancellationToken cancellationToken = default)
         {
             var isPollExisting = await _context.polls.AnyAsync(x => x.Id == pollId, cancellationToken);
             if (!isPollExisting)
             {
-                return Result.Failure<IEnumerable< QuestionResponse >> (PollErrors.PollNotFound);
+                return Result.Failure<PaginatedList< QuestionResponse >> (PollErrors.PollNotFound);
             }
 
             //include for eager loading the answers
-            var Questions = await _context.Questions.Where(x=>x.PollId == pollId).Include(x => x.Answers)
-                .AsNoTracking().Select(x => x.Adapt<QuestionResponse>()).ToListAsync(cancellationToken);
-            return Result.Success<IEnumerable<QuestionResponse>>(Questions);
+            var query = _context.Questions
+                .Where(x => x.PollId == pollId
+                 && (string.IsNullOrEmpty(pageFilter.SearchItem) || x.Content.Contains(pageFilter.SearchItem)));
+            if (!string.IsNullOrEmpty(pageFilter.SortedCol))
+            {
+                query = query.OrderBy($"{pageFilter.SortedCol} {pageFilter.SortingType}");
+            }
+            var resultQuery = query.Include(x => x.Answers)
+                .Select(x => x.Adapt<QuestionResponse>())
+                .AsNoTracking();
+                
+
+                // .Include(x => x.Answers)
+                //.AsNoTracking()
+                //.Select(x => x.Adapt<QuestionResponse>());
+
+                //Manuel it will be like this
+                /*
+                 * var query = _context.Questions
+                             .Where(x => x.PollId == pollId)
+                                .Include(x => x.Answers)
+                            .AsNoTracking()
+                            .Select(x => new QuestionResponse(
+                                x.Id,
+                            x.Content,
+                            x.Answers
+                            .Where(a => a.isActive) // Optional: Include only active answers
+                            .Select(a => new AnswerResponse(
+                                a.Id,
+                                a.Content
+                                ))
+                            ));
+                 */
+                var response = await PaginatedList<QuestionResponse>
+                           .CreateListAsync(resultQuery, pageFilter.PageNumber, pageFilter.PageSize, cancellationToken);
+            return Result.Success<PaginatedList<QuestionResponse>>(response);
         }
 
         public async Task<Result<QuestionResponse>> GetAsync(int pollId, int questionId, CancellationToken cancellationToken = default)

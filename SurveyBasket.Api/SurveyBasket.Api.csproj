@@ -26,6 +26,8 @@
     </PackageReference>
     <PackageReference Include="Serilog.AspNetCore" Version="9.0.0-dev-02301" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="System.Linq.Dynamic" Version="1.0.8" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.5.1" />
   </ItemGroup>
 
 </Project>

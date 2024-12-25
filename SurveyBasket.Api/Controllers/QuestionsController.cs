@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Authorization;
 using SurveyBasket.Api.Abstractions;
 using SurveyBasket.Api.Authentication.Filters;
+using SurveyBasket.Api.Contracts.Common;
 using SurveyBasket.Api.Entities;
 
 namespace SurveyBasket.Api.Controllers
@@ -39,9 +40,9 @@ namespace SurveyBasket.Api.Controllers
 
         [HttpGet("")]
         [HasPermission(Permissions.GetQuestions)]
-        public async Task<IActionResult> GetAll([FromRoute] int pollId, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAll([FromRoute] int pollId,[FromQuery] RequestFilter pageFilter , CancellationToken cancellationToken)
         {
-            var result = await _questionService.GetAllAsync(pollId , cancellationToken);
+            var result = await _questionService.GetAllAsync(pollId ,pageFilter, cancellationToken);
             return result.IsSuccess ? Ok(result.Value)
                 : result.ToProblem(); 
         }
