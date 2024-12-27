@@ -194,3 +194,9 @@ D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\zh\Hangfi
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\HangfireBasicAuthenticationFilter.dll
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\System.Linq.Dynamic.dll
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\System.Linq.Dynamic.Core.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\HealthChecks.UI.Client.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\HealthChecks.UI.Core.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\HealthChecks.Hangfire.dll

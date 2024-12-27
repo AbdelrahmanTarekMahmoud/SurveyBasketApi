@@ -1,19 +1,20 @@
 ﻿
 using SurveyBasket.Api.Authentication.Filters;
+using SurveyBasket.Api.Health;
 
 namespace SurveyBasket.Api
 {
     public static class DependencyInjection
     {
         public static IServiceCollection AddDependencies(this IServiceCollection services
-            ,IConfiguration configuration)
+            , IConfiguration configuration)
         {
             // Add services to the container.
             services.AddControllers();
 
             //CORS part to include any origin (*) "Wildcard"
             services.AddCors(options => options.
-            AddPolicy("Allow All", 
+            AddPolicy("Allow All",
             builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyHeader()));
 
             services.AddSwagerServices();
@@ -27,22 +28,27 @@ namespace SurveyBasket.Api
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
             services.AddScoped<IPollService, PollService>();
-            services.AddScoped<IAuthService , AuthService>();
-            services.AddScoped<IQuestionService , QuestionService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IQuestionService, QuestionService>();
             services.AddScoped<IVoteService, VoteService>();
-            services.AddScoped<IResultService , ResultService>();
-            services.AddScoped<ICacheService , CacheService>();
-            services.AddScoped<IEmailSender , EmailService>();
-            services.AddScoped<INotificationService ,  NotificationService>();
-            services.AddScoped<IUserService , UserService>();
-            services.AddScoped<IRoleService , RoleService>();
+            services.AddScoped<IResultService, ResultService>();
+            services.AddScoped<ICacheService, CacheService>();
+            services.AddScoped<IEmailSender, EmailService>();
+            services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleService, RoleService>();
 
             services.AddExceptionHandler<GlobalExceptionHandler>();
             services.AddProblemDetails();
 
-            services.AddHttpContextAccessor(); 
+            services.AddHttpContextAccessor();
 
             services.Configure<MailSettings>(configuration.GetSection(nameof(MailSettings)));
+
+            services.AddHealthChecks()
+                .AddDbContextCheck<ApplicationDbContext>(name: "DataBase")
+                .AddHangfire(options => options.MinimumAvailableServers = 1)
+                .AddCheck<MailServiceHealthChecker>(name : "Mail Service"); 
             return services;
         }
         private static IServiceCollection AddSwagerServices(this IServiceCollection services)

@@ -1,6 +1,7 @@
 
 
 using HangfireBasicAuthenticationFilter;
+using HealthChecks.UI.Client;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using SurveyBasket.Api.Presistence;
@@ -52,4 +53,10 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.UseExceptionHandler();
+
+//"health" is the path
+app.MapHealthChecks("health" , new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 app.Run();
