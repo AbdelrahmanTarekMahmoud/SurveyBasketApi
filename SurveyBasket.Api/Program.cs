@@ -54,6 +54,7 @@ app.UseAuthorization();
 app.MapControllers();
 app.UseExceptionHandler();
 
+app.UseRateLimiter();
 //"health" is the path
 app.MapHealthChecks("health" , new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
 {

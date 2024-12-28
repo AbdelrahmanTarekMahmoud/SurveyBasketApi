@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Xml.Linq;
 
 namespace SurveyBasket.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [EnableRateLimiting("CustomIpAdrressRateLimit")]
     public class AuthController(IAuthService authService , ILogger<AuthController> logger) : ControllerBase
     {
         private readonly IAuthService _authService = authService;
@@ -62,5 +64,12 @@ namespace SurveyBasket.Api.Controllers
             return Result.IsSuccess ? Ok() : Result.ToProblem();
         }
 
+        //[HttpGet("test")]
+        //[EnableRateLimiting("SlidingWindowLimiter")]
+        //public IActionResult TestConcurrentRateLimiter()
+        //{
+        //    Thread.Sleep(5000);
+        //    return Ok();
+        //}
     }
 }

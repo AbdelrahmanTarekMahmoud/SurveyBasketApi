@@ -1,6 +1,8 @@
 ﻿
+using Microsoft.AspNetCore.RateLimiting;
 using SurveyBasket.Api.Authentication.Filters;
 using SurveyBasket.Api.Health;
+using System.Threading.RateLimiting;
 
 namespace SurveyBasket.Api
 {
@@ -45,6 +47,64 @@ namespace SurveyBasket.Api
 
             services.Configure<MailSettings>(configuration.GetSection(nameof(MailSettings)));
 
+
+            //RateLimiter
+            services.AddRateLimiter(rateLimiterOptions =>
+            {
+                rateLimiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+                //rateLimiterOptions.AddPolicy("CustomUserLimiter", httpContext =>
+                //    RateLimitPartition.GetFixedWindowLimiter
+                //    (
+                //        partitionKey: httpContext.User.GetUserId(),
+                //        factory: x => new FixedWindowRateLimiterOptions
+                //        {
+                //            PermitLimit = 2,
+                //            Window = TimeSpan.FromSeconds(15)
+                //        }
+                //    )
+                //);
+                //rateLimiterOptions.AddPolicy("CustomIpAdrressRateLimit", httpContext =>
+                //    RateLimitPartition.GetFixedWindowLimiter
+                //    (
+                //        partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
+                //        factory : x => new FixedWindowRateLimiterOptions
+                //        {
+                //            PermitLimit = 2,
+                //            Window = TimeSpan.FromSeconds(15)
+                //        }
+                //    )
+                //);
+                rateLimiterOptions.AddConcurrencyLimiter("ConcurrencyLimiter", options =>
+                {
+                    options.PermitLimit = 500; //max number i can handle
+                    options.QueueLimit = 50; // max number i can add to queue
+                    options.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+                });
+                //rateLimiterOptions.AddTokenBucketLimiter("BucketLimiter", options =>
+                //{
+                //    options.TokenLimit = 2;
+                //    options.AutoReplenishment = true;
+                //    options.ReplenishmentPeriod = TimeSpan.FromSeconds(10);
+                //    options.TokensPerPeriod = 2;
+                //    options.QueueLimit = 1;
+                //});
+                //rateLimiterOptions.AddFixedWindowLimiter("FixedWindowLimiter", options =>
+                //{
+                //    options.AutoReplenishment = true;
+                //    options.QueueLimit = 1;
+                //    options.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+                //    options.PermitLimit = 2;
+                //    options.Window = TimeSpan.FromSeconds(15);
+                //});
+                //rateLimiterOptions.AddSlidingWindowLimiter("SlidingWindowLimiter", options =>
+                //{
+                //    options.QueueLimit = 1;
+                //    options.PermitLimit = 2;
+                //    options.SegmentsPerWindow = 2;
+                //    options.Window = TimeSpan.FromSeconds(20); // time span for entire window will be divided into segements
+                //});
+            });
+            //HealthCheck
             services.AddHealthChecks()
                 .AddDbContextCheck<ApplicationDbContext>(name: "DataBase")
                 .AddHangfire(options => options.MinimumAvailableServers = 1)
