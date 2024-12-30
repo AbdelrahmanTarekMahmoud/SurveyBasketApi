@@ -200,3 +200,7 @@ D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\HealthChe
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.dll
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\HealthChecks.Hangfire.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Asp.Versioning.Abstractions.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Asp.Versioning.Http.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Asp.Versioning.Mvc.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Asp.Versioning.Mvc.ApiExplorer.dll

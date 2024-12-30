@@ -1,4 +1,5 @@
 ﻿
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using SurveyBasket.Api.Abstractions;
 using SurveyBasket.Api.Authentication.Filters;
@@ -7,6 +8,8 @@ using System.Xml.Linq;
 
 namespace SurveyBasket.Api.Controllers
 {
+    [ApiVersion(1 , Deprecated = true)]
+    [ApiVersion(2)]
     [Route("api/[controller]")]
     [ApiController] // body json default
     //[Authorize]
@@ -24,9 +27,19 @@ namespace SurveyBasket.Api.Controllers
 
         [Authorize(Roles = DefaultRoles.Member)]
         [HttpGet("Current")]
-        public async Task<IActionResult> GetCurrent(CancellationToken cancellationToken)
+        [MapToApiVersion(1)]
+        public async Task<IActionResult> GetCurrentV1(CancellationToken cancellationToken)
         {
-            var polls = await _pollService.GetCurrentAsync(cancellationToken);
+            var polls = await _pollService.GetCurrentAsyncV1(cancellationToken);
+            return Ok(polls);
+        }
+
+        [Authorize(Roles = DefaultRoles.Member)]
+        [HttpGet("Current")]
+        [MapToApiVersion(2)]
+        public async Task<IActionResult> GetCurrentV2(CancellationToken cancellationToken)
+        {
+            var polls = await _pollService.GetCurrentAsyncV2(cancellationToken);
             return Ok(polls);
         }
 

@@ -1,4 +1,5 @@
 ﻿
+using Asp.Versioning;
 using Microsoft.AspNetCore.RateLimiting;
 using SurveyBasket.Api.Authentication.Filters;
 using SurveyBasket.Api.Health;
@@ -108,7 +109,29 @@ namespace SurveyBasket.Api
             services.AddHealthChecks()
                 .AddDbContextCheck<ApplicationDbContext>(name: "DataBase")
                 .AddHangfire(options => options.MinimumAvailableServers = 1)
-                .AddCheck<MailServiceHealthChecker>(name : "Mail Service"); 
+                .AddCheck<MailServiceHealthChecker>(name : "Mail Service");
+
+            //Versioning
+            //services.AddApiVersioning(options =>
+            //{
+            //    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+            //}).AddApiExplorer(options =>
+            //{
+            //    options.GroupNameFormat = "'v'V";
+            //    options.SubstituteApiVersionInUrl = true;
+            //});
+            services.AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1);
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ReportApiVersions = true;
+                //"api-version" is the name of var that will recieve the version
+                options.ApiVersionReader = new HeaderApiVersionReader("api-version");
+            }).AddApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'V";
+                options.SubstituteApiVersionInUrl = true;
+            });
             return services;
         }
         private static IServiceCollection AddSwagerServices(this IServiceCollection services)

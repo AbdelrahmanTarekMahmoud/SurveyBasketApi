@@ -1,9 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "7OL1wCWSbjc=",
+  "dgSpecHash": "Y1oX4lWJPnw=",
   "success": true,
   "projectFilePath": "D:\\Abdo\\SurveyBasketAPI\\SurveyBasket\\SurveyBasket.Api\\SurveyBasket.Api.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\abdel\\.nuget\\packages\\asp.versioning.abstractions\\8.1.0\\asp.versioning.abstractions.8.1.0.nupkg.sha512",
+    "C:\\Users\\abdel\\.nuget\\packages\\asp.versioning.http\\8.1.0\\asp.versioning.http.8.1.0.nupkg.sha512",
+    "C:\\Users\\abdel\\.nuget\\packages\\asp.versioning.mvc\\8.1.0\\asp.versioning.mvc.8.1.0.nupkg.sha512",
+    "C:\\Users\\abdel\\.nuget\\packages\\asp.versioning.mvc.apiexplorer\\8.1.0\\asp.versioning.mvc.apiexplorer.8.1.0.nupkg.sha512",
     "C:\\Users\\abdel\\.nuget\\packages\\aspnetcore.healthchecks.hangfire\\9.0.0\\aspnetcore.healthchecks.hangfire.9.0.0.nupkg.sha512",
     "C:\\Users\\abdel\\.nuget\\packages\\aspnetcore.healthchecks.ui.client\\9.0.0\\aspnetcore.healthchecks.ui.client.9.0.0.nupkg.sha512",
     "C:\\Users\\abdel\\.nuget\\packages\\aspnetcore.healthchecks.ui.core\\9.0.0\\aspnetcore.healthchecks.ui.core.9.0.0.nupkg.sha512",

@@ -79,13 +79,25 @@ namespace SurveyBasket.Api.Services
             
         }
 
-        public async Task<IEnumerable<PollResponse>> GetCurrentAsync(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<PollResponse>> GetCurrentAsyncV1(CancellationToken cancellationToken = default)
         {
             var PublishedPolls = await _context.polls.AsNoTracking()
                 .Where(x => x.IsPublished == true 
                 && x.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow)
                 && x.EndsAt >= DateOnly.FromDateTime(DateTime.UtcNow))
                 .Select(x=>x.Adapt<PollResponse>())
+                .ToListAsync(cancellationToken);
+
+            return PublishedPolls;
+        }
+
+        public async Task<IEnumerable<PollResponseV2>> GetCurrentAsyncV2(CancellationToken cancellationToken = default)
+        {
+            var PublishedPolls = await _context.polls.AsNoTracking()
+                .Where(x => x.IsPublished == true
+                && x.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow)
+                && x.EndsAt >= DateOnly.FromDateTime(DateTime.UtcNow))
+                .Select(x => x.Adapt<PollResponseV2>())
                 .ToListAsync(cancellationToken);
 
             return PublishedPolls;
