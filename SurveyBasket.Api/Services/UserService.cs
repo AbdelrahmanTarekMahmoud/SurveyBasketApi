@@ -2,7 +2,7 @@
 
 namespace SurveyBasket.Api.Services
 {
-    public class UserService(ApplicationDbContext context ,
+    public class UserService(ApplicationDbContext context,
         UserManager<ApplicationUser> userManager
         , IRoleService roleService) : IUserService
     {
@@ -36,7 +36,7 @@ namespace SurveyBasket.Api.Services
                 .SetProperty(x => x.FirstName, request.FirstName)
                 .SetProperty(x => x.LastName, request.LastName)
                 );
-            return Result.Success();  
+            return Result.Success();
         }
 
 
@@ -44,12 +44,12 @@ namespace SurveyBasket.Api.Services
         public async Task<Result> ChangePasswordAsync(string UserId, UserChangePasswordRequest request, CancellationToken cancellationToken = default)
         {
             var user = await _context.Users.Where(x => x.Id == UserId).SingleAsync();
-            var result =  await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
-            if(result.Succeeded) 
-            return Result.Success();
+            var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
+            if (result.Succeeded)
+                return Result.Success();
 
             var error = result.Errors.FirstOrDefault();
-            return Result.Failure(new Error(error.Code , error.Description , StatusCodes.Status400BadRequest));
+            return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
         }
 
 
@@ -60,70 +60,70 @@ namespace SurveyBasket.Api.Services
             //here we are grouping by Users 
             //because we starts from _contex.Users
             //so we have like this "Ahmed Khaled" : ["Admin" , "PollManager" , "RoleManager"] for example
-           return await (
-                   from u in _context.Users
-                   join ur in _context.UserRoles
-                   on u.Id equals ur.UserId
-                   join r in _context.Roles
-                   on ur.RoleId equals r.Id into roles
-                   where !roles.Any(x => x.Name == DefaultRoles.Member)
-                   select new
-                       {
-                         u.Id,
-                         u.FirstName,
-                         u.LastName,
-                         u.Email,
-                         u.IsDisabled,
-                         Roles = roles.Select(x => x.Name).ToList()
-                        }
-                   )
-                   .GroupBy(u => new {u.Id, u.FirstName, u.LastName , u.Email , u.IsDisabled})
-                   .Select(u => new UserResponse(u.Key.Id , u.Key.FirstName , u.Key.LastName , u.Key.Email , u.Key.IsDisabled ,u.SelectMany(x => x.Roles)))
-                   .ToListAsync(cancellationToken);
+            return await (
+                    from u in _context.Users
+                    join ur in _context.UserRoles
+                    on u.Id equals ur.UserId
+                    join r in _context.Roles
+                    on ur.RoleId equals r.Id into roles
+                    where !roles.Any(x => x.Name == DefaultRoles.Member)
+                    select new
+                    {
+                        u.Id,
+                        u.FirstName,
+                        u.LastName,
+                        u.Email,
+                        u.IsDisabled,
+                        Roles = roles.Select(x => x.Name).ToList()
+                    }
+                    )
+                    .GroupBy(u => new { u.Id, u.FirstName, u.LastName, u.Email, u.IsDisabled })
+                    .Select(u => new UserResponse(u.Key.Id, u.Key.FirstName, u.Key.LastName, u.Key.Email, u.Key.IsDisabled, u.SelectMany(x => x.Roles)))
+                    .ToListAsync(cancellationToken);
 
         }
 
         public async Task<Result<UserResponse>> GetUserDetailsAsync(string id, CancellationToken cancellationToken = default)
         {
             var User = await _userManager.FindByIdAsync(id);
-            if(User is null)
+            if (User is null)
             {
                 return Result.Failure<UserResponse>(UserErrors.UserDoesnotExist);
             }
-            
+
             var UserRoles = await _userManager.GetRolesAsync(User);
 
             //multiple Sources 
-            var response = (User , UserRoles).Adapt<UserResponse>();
+            var response = (User, UserRoles).Adapt<UserResponse>();
             //or this
             //var response = new UserResponse(id , User.FirstName , User.LastName , User.Email , User.IsDisabled
             //    , UserRoles);
-            
-            
+
+
             return Result.Success(response);
         }
 
         public async Task<Result<UserResponse>> CreateNewUserAsync(CreateUserRequest request, CancellationToken cancellationToken = default)
         {
             var IsThereExistingUserWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
-            if(IsThereExistingUserWithSameEmail is not null)
+            if (IsThereExistingUserWithSameEmail is not null)
             {
                 return Result.Failure<UserResponse>(UserErrors.AlreadyRegisteredEmail);
             }
 
             var AllowedRoles = await _roleService.GetActiveRolesAsync(cancellationToken);
-            if(request.Roles.Except(AllowedRoles.Select(x=>x.Name)).Any())
+            if (request.Roles.Except(AllowedRoles.Select(x => x.Name)).Any())
             {
                 return Result.Failure<UserResponse>(RoleErrors.PermissionsInvalid);
             }
 
             var newUser = request.Adapt<ApplicationUser>();
 
-            var result = await _userManager.CreateAsync(newUser , request.Password);
-            if(result.Succeeded)
+            var result = await _userManager.CreateAsync(newUser, request.Password);
+            if (result.Succeeded)
             {
                 await _userManager.AddToRolesAsync(newUser, request.Roles);
-                var response = (newUser , request.Roles).Adapt<UserResponse>();
+                var response = (newUser, request.Roles).Adapt<UserResponse>();
                 return Result.Success<UserResponse>(response);
             }
             var error = result.Errors.First();
@@ -134,7 +134,7 @@ namespace SurveyBasket.Api.Services
         {
             //check if there is any other user with same Email but diff id
             var isInvalidUser = await _context.Users.AnyAsync(x => x.Email == request.Email && x.Id != id);
-            if(isInvalidUser)
+            if (isInvalidUser)
             {
                 return Result.Failure(UserErrors.InvalidCredentials);
             }
@@ -147,7 +147,7 @@ namespace SurveyBasket.Api.Services
 
             //check if user with given id is exist
             var TargetUser = await _userManager.FindByIdAsync(id);
-            if(TargetUser is null)
+            if (TargetUser is null)
             {
                 return Result.Failure(UserErrors.UserNotFound);
             }
@@ -159,29 +159,29 @@ namespace SurveyBasket.Api.Services
 
             var result = await _userManager.UpdateAsync(TargetUser);
 
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 await _context.UserRoles.Where(x => x.UserId == id).ExecuteDeleteAsync(cancellationToken);
-                await _userManager.AddToRolesAsync(TargetUser , request.Roles);
+                await _userManager.AddToRolesAsync(TargetUser, request.Roles);
                 return Result.Success();
             }
 
             var error = result.Errors.FirstOrDefault();
-            return Result.Failure(new Error(error.Code , error.Description , StatusCodes.Status400BadRequest));
+            return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
         }
 
         public async Task<Result> ToggleUserStatusAsync(string id, CancellationToken cancellationToken = default)
         {
             var user = await _context.Users.FindAsync(id);
 
-            if(user is null)
+            if (user is null)
             {
                 return Result.Failure(UserErrors.UserNotFound);
             }
 
             user.IsDisabled = !user.IsDisabled;
             await _context.SaveChangesAsync(cancellationToken);
-            
+
             return Result.Success();
         }
 
@@ -194,8 +194,8 @@ namespace SurveyBasket.Api.Services
                 return Result.Failure(UserErrors.UserNotFound);
             }
 
-            await _userManager.SetLockoutEndDateAsync(user , null);
-            
+            await _userManager.SetLockoutEndDateAsync(user, null);
+
 
             return Result.Success();
         }

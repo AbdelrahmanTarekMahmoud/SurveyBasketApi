@@ -5,7 +5,7 @@ namespace SurveyBasket.Api.Services
     {
         private readonly ApplicationDbContext _context = context;
 
-        public async Task<Result<PollVotesResponse>> GetVoteResultsAsync(int pollId , CancellationToken cancellationToken)
+        public async Task<Result<PollVotesResponse>> GetVoteResultsAsync(int pollId, CancellationToken cancellationToken)
         {
             var PollResult = await _context.polls
                 .Where(x => x.Id == pollId)
@@ -19,17 +19,17 @@ namespace SurveyBasket.Api.Services
         }
         public async Task<Result<IEnumerable<VotesInDayResponse>>> GetVoteInDaysAsync(int pollId, CancellationToken cancellationToken)
         {
-            var isPollExist = await _context.polls.AnyAsync(x => x.Id == pollId , cancellationToken);
-            if (!isPollExist) 
+            var isPollExist = await _context.polls.AnyAsync(x => x.Id == pollId, cancellationToken);
+            if (!isPollExist)
             {
                 return Result.Failure<IEnumerable<VotesInDayResponse>>(PollErrors.PollNotFound);
             }
 
             var votesPerDay = await _context.Votes.Where(x => x.PollId == pollId).
-                GroupBy(x => new {Date = DateOnly.FromDateTime(x.SumbittedOn)}).
-                Select(x => new VotesInDayResponse(x.Key.Date , x.Count())).ToListAsync(cancellationToken);
+                GroupBy(x => new { Date = DateOnly.FromDateTime(x.SumbittedOn) }).
+                Select(x => new VotesInDayResponse(x.Key.Date, x.Count())).ToListAsync(cancellationToken);
 
-            return Result.Success<IEnumerable<VotesInDayResponse>>(votesPerDay);    
+            return Result.Success<IEnumerable<VotesInDayResponse>>(votesPerDay);
         }
     }
 }

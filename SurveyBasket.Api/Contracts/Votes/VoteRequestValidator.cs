@@ -1,6 +1,6 @@
 ﻿namespace SurveyBasket.Api.Contracts.Votes
 {
-    public class VoteRequestValidator  : AbstractValidator<VoteRequest>
+    public class VoteRequestValidator : AbstractValidator<VoteRequest>
     {
         public VoteRequestValidator()
         {

@@ -1,11 +1,5 @@
-﻿
-
-using MailKit.Net.Smtp;
-using MailKit.Security;
-using Microsoft.Extensions.Options;
+﻿using MailKit.Security;
 using MimeKit;
-using SurveyBasket.Api.Setting;
-using System.Net.Mail;
 
 namespace SurveyBasket.Api.Services
 {
@@ -36,13 +30,13 @@ namespace SurveyBasket.Api.Services
             using var smtp = new MailKit.Net.Smtp.SmtpClient();
 
             _logger.LogInformation("Sending email to {email}", email);
-            _logger.LogInformation("Sending email using SMTP Host: {Host} and Port: {Port}{password}", _mailSettings.Host, _mailSettings.Port , _mailSettings.Password);
+            _logger.LogInformation("Sending email using SMTP Host: {Host} and Port: {Port}{password}", _mailSettings.Host, _mailSettings.Port, _mailSettings.Password);
 
 
-            smtp.Connect(_mailSettings.Host , _mailSettings.Port , SecureSocketOptions.None);
+            smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.None);
             //smtp.Connect("smtp.ethereal.email", 587, SecureSocketOptions.StartTls);
 
-            
+
             smtp.Authenticate(_mailSettings.UserName, _mailSettings.Password);
             await smtp.SendAsync(message);
             smtp.Disconnect(true);

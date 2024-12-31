@@ -12,14 +12,14 @@ namespace SurveyBasket.Api.Health
             try
             {
                 using var smtp = new MailKit.Net.Smtp.SmtpClient();
-                smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.None ,cancellationToken);
-                smtp.Authenticate(_mailSettings.UserName, _mailSettings.Password , cancellationToken);
+                smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.None, cancellationToken);
+                smtp.Authenticate(_mailSettings.UserName, _mailSettings.Password, cancellationToken);
 
                 return await Task.FromResult(HealthCheckResult.Healthy());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return await Task.FromResult(HealthCheckResult.Unhealthy(exception : ex));
+                return await Task.FromResult(HealthCheckResult.Unhealthy(exception: ex));
             }
         }
     }

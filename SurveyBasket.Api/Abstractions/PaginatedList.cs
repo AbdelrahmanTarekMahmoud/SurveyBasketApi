@@ -5,7 +5,7 @@
     public class PaginatedList<T>
     {
         //count is the number of total items
-        public PaginatedList(List<T> items , int pageNumber , int count , int PageSize)
+        public PaginatedList(List<T> items, int pageNumber, int count, int PageSize)
         {
             PageItems = items;
             PageNumber = pageNumber;
@@ -13,14 +13,14 @@
         }
         //Total items in each page
         public List<T> PageItems { get; private set; }
-        public int PageNumber {  get; private set; }
+        public int PageNumber { get; private set; }
         //To help frontend to shape the pages 
-        public int TotalPages { get; private set;}
+        public int TotalPages { get; private set; }
         //starts with 1 
         public bool HasPrevious => PageNumber > 1;
         public bool HasNext => PageNumber < TotalPages;
 
-        public static async Task<PaginatedList<T>> CreateListAsync(IQueryable<T> query , int pageNumber , int pageSize , CancellationToken cancellationToken = default)
+        public static async Task<PaginatedList<T>> CreateListAsync(IQueryable<T> query, int pageNumber, int pageSize, CancellationToken cancellationToken = default)
         {
             //count number of items
             var count = await query.CountAsync(cancellationToken);

@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SurveyBasket.Api.Contracts.Votes;
-using SurveyBasket.Api.Entities;
+﻿using SurveyBasket.Api.Contracts.Votes;
 
 namespace SurveyBasket.Api.Services
 {
@@ -30,7 +28,7 @@ namespace SurveyBasket.Api.Services
             //check if the question with the "pollId" aligns with the ones in "voteRequest"
             //we need only ids so we will select x.Id only
             var inDbQuestion = await _context.Questions.Where(x => x.PollId == pollId && x.isActive)
-                .Select(x=>x.Id).ToListAsync(cancellationToken);
+                .Select(x => x.Id).ToListAsync(cancellationToken);
 
             var inRequestQuestions = voteRequest.Answers.Select(x => x.QuestionId).ToList();
 

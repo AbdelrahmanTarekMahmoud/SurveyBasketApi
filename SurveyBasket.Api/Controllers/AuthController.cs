@@ -1,25 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
-using System.Xml.Linq;
-
-namespace SurveyBasket.Api.Controllers
+﻿namespace SurveyBasket.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
     //[EnableRateLimiting("CustomIpAdrressRateLimit")]
-    public class AuthController(IAuthService authService , ILogger<AuthController> logger) : ControllerBase
+    public class AuthController(IAuthService authService, ILogger<AuthController> logger) : ControllerBase
     {
         private readonly IAuthService _authService = authService;
         private readonly ILogger<AuthController> _logger = logger;
 
         [HttpPost("")]
-        public async Task<IActionResult> LoginAsync(LoginRequest request , CancellationToken cancellationToken)
+        public async Task<IActionResult> LoginAsync(LoginRequest request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Logging info Email : {email} , Password : {password}" , request.Email, request.Password);
+            _logger.LogInformation("Logging info Email : {email} , Password : {password}", request.Email, request.Password);
             var authResult = await _authService.GetTokenAsync(request.Email, request.Password, cancellationToken);
             return authResult.IsSuccess ? Ok(authResult.Value) : authResult.ToProblem();
-            
+
         }
 
 
@@ -51,7 +46,7 @@ namespace SurveyBasket.Api.Controllers
         public async Task<IActionResult> SendForgetPasswordEmail([FromBody] ForgetPasswordRequest request, CancellationToken cancellationToken)
         {
 
-            var Result = await _authService.SendForgetPasswordCode(request , cancellationToken);
+            var Result = await _authService.SendForgetPasswordCode(request, cancellationToken);
             return Result.IsSuccess ? Ok() : Result.ToProblem();
         }
 

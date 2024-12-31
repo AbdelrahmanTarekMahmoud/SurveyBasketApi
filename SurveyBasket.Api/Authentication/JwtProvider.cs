@@ -7,8 +7,8 @@ namespace SurveyBasket.Api.Authentication
     {
         private readonly JwtOptions _jwtOptions = JwtOptions.Value;
 
-        public (string token, int expiresIn) GenerateToken(ApplicationUser user ,
-            IEnumerable<string> roles , IEnumerable<string> permissions)
+        public (string token, int expiresIn) GenerateToken(ApplicationUser user,
+            IEnumerable<string> roles, IEnumerable<string> permissions)
         {
             Claim[] claims = [
                 new(JwtRegisteredClaimNames.Sub , user.Id),

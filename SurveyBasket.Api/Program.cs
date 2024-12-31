@@ -2,9 +2,8 @@
 
 using HangfireBasicAuthenticationFilter;
 using HealthChecks.UI.Client;
-using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 using Serilog;
-using SurveyBasket.Api.Presistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,8 +22,10 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.MapScalarApiReference();
+    //    app.UseSwagger();
+    //    app.UseSwaggerUI();
 }
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
@@ -56,7 +57,7 @@ app.UseExceptionHandler();
 
 app.UseRateLimiter();
 //"health" is the path
-app.MapHealthChecks("health" , new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+app.MapHealthChecks("health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });

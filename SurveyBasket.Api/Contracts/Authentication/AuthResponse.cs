@@ -10,5 +10,5 @@ namespace SurveyBasket.Api.Contracts.Authentication
         string Token,
         int ExpiresIn
     );
-    
+
 }

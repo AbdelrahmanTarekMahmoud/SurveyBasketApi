@@ -1,6 +1,4 @@
 ﻿using SurveyBasket.Api.Contracts.Common;
-using SurveyBasket.Api.Contracts.Polls;
-using SurveyBasket.Api.Contracts.Questions;
 
 namespace SurveyBasket.Api.Services
 {
@@ -13,10 +11,10 @@ namespace SurveyBasket.Api.Services
          */
         Task<Result<QuestionResponse>> AddAsync(QuestionRequest questionRequest, int pollId, CancellationToken cancellationToken = default);
         Task<Result<PaginatedList<QuestionResponse>>> GetAllAsync(int pollId, RequestFilter pageFilter, CancellationToken cancellationToken = default);
-        Task<Result<IEnumerable<QuestionResponse>>> GetAvailableAsync(int pollId, string userId , CancellationToken cancellationToken = default);
-        Task<Result<QuestionResponse>> GetAsync(int pollId , int questionId , CancellationToken cancellationToken = default);
+        Task<Result<IEnumerable<QuestionResponse>>> GetAvailableAsync(int pollId, string userId, CancellationToken cancellationToken = default);
+        Task<Result<QuestionResponse>> GetAsync(int pollId, int questionId, CancellationToken cancellationToken = default);
         Task<Result> ToggleActiveStatus(int pollId, int questionId, CancellationToken cancellationToken = default);
-        Task<Result> UpdateAsync(int pollId, int questionId,QuestionRequest questionRequest , CancellationToken cancellationToken = default);
+        Task<Result> UpdateAsync(int pollId, int questionId, QuestionRequest questionRequest, CancellationToken cancellationToken = default);
 
 
     }

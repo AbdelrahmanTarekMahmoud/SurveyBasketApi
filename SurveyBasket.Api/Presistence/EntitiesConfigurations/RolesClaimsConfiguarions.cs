@@ -9,7 +9,7 @@
             //this is the list of permissions assigned to admin
             var adminClaims = new List<IdentityRoleClaim<string>>();
 
-            for(var i  = 0; i < permissions.Count; i++)
+            for (var i = 0; i < permissions.Count; i++)
             {
                 adminClaims.Add(new IdentityRoleClaim<string>
                 {

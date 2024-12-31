@@ -1,6 +1,6 @@
 ﻿namespace SurveyBasket.Api.Presistence.EntitiesConfigurations
 {
-    public class VoteConfigurations : IEntityTypeConfiguration <Vote>
+    public class VoteConfigurations : IEntityTypeConfiguration<Vote>
     {
         public void Configure(EntityTypeBuilder<Vote> builder)
         {

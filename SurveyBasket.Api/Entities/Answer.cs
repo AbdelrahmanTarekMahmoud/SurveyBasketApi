@@ -1,6 +1,6 @@
 ﻿namespace SurveyBasket.Api.Entities
 {
-    public class Answer 
+    public class Answer
     {
         //primary Key
         public int Id { get; set; }
@@ -15,6 +15,6 @@
 
         //navigation property
         public Question Question { get; set; } = default!;
-         
+
     }
 }

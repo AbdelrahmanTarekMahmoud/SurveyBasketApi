@@ -3,5 +3,5 @@
     public record ResendEmailConfirmationRequest(
         string Email
         );
-    
+
 }

@@ -3,7 +3,7 @@ using SurveyBasket.Api.Authentication.Filters;
 
 namespace SurveyBasket.Api.Controllers
 {
-    [Route("me")]
+    [Route("user")]
     [ApiController]
     [Authorize]
     public class UserController(IUserService userService) : ControllerBase
@@ -20,9 +20,9 @@ namespace SurveyBasket.Api.Controllers
 
 
         [HttpPut("profile-update")]
-        public async Task<IActionResult> UpdateUserProfile([FromBody] UserProfileUpdateRequest request , CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateUserProfile([FromBody] UserProfileUpdateRequest request, CancellationToken cancellationToken)
         {
-            var result = await _userService.UpdateUserProfileAsync(User.GetUserId(), request , cancellationToken);
+            var result = await _userService.UpdateUserProfileAsync(User.GetUserId(), request, cancellationToken);
             return NoContent();
         }
 
@@ -31,7 +31,7 @@ namespace SurveyBasket.Api.Controllers
         public async Task<IActionResult> ChangeUserPassword([FromBody] UserChangePasswordRequest request, CancellationToken cancellationToken)
         {
             var result = await _userService.ChangePasswordAsync(User.GetUserId()!, request, cancellationToken);
-            
+
             return result.IsSuccess ? NoContent() : result.ToProblem();
         }
 
@@ -43,44 +43,44 @@ namespace SurveyBasket.Api.Controllers
             var result = await _userService.GetAllUsersDetailsAsync(cancellationToken);
             return Ok(result);
         }
- 
 
-        [HttpGet("user/{id}")]
+
+        [HttpGet("{id}")]
         [HasPermission(Permissions.GetUsers)]
-        public async Task<IActionResult> GetUserData([FromRoute] string id ,CancellationToken cancellationToken)
+        public async Task<IActionResult> GetUserData([FromRoute] string id, CancellationToken cancellationToken)
         {
-            var result = await _userService.GetUserDetailsAsync(id , cancellationToken);
-            return result.IsSuccess? Ok(result.Value) : result.ToProblem();
+            var result = await _userService.GetUserDetailsAsync(id, cancellationToken);
+            return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
         }
 
 
-        [HttpPost("")]
+        [HttpPost("create-user")]
         [HasPermission(Permissions.AddUser)]
         public async Task<IActionResult> CreateNewUser([FromBody] CreateUserRequest request, CancellationToken cancellationToken)
         {
             var result = await _userService.CreateNewUserAsync(request, cancellationToken);
-            return result.IsSuccess ? CreatedAtAction(nameof(GetUserData) , new {result.Value.Id} , result.Value) : result.ToProblem();
+            return result.IsSuccess ? CreatedAtAction(nameof(GetUserData), new { result.Value.Id }, result.Value) : result.ToProblem();
         }
 
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}/update-user")]
         [HasPermission(Permissions.UpdateUser)]
-        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest request,[FromRoute] string id, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest request, [FromRoute] string id, CancellationToken cancellationToken)
         {
             var result = await _userService.UpdateUserAsync(request, id, cancellationToken);
             return result.IsSuccess ? NoContent() : result.ToProblem();
         }
 
-        [HttpPut("toggle/{id}")]
+        [HttpPut("{id}/toggle")]
         [HasPermission(Permissions.UpdateUser)]
         public async Task<IActionResult> ToggleStatus([FromRoute] string id, CancellationToken cancellationToken)
         {
             var result = await _userService.ToggleUserStatusAsync(id, cancellationToken);
 
-            return result.IsSuccess? NoContent() : result.ToProblem();  
+            return result.IsSuccess ? NoContent() : result.ToProblem();
         }
 
-        [HttpPut("lockout/{id}")]
+        [HttpPut("{id}/lockout")]
         [HasPermission(Permissions.UpdateUser)]
         public async Task<IActionResult> UnlockUser([FromRoute] string id, CancellationToken cancellationToken)
         {

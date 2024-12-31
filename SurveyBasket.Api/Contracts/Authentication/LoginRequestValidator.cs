@@ -1,6 +1,4 @@
-﻿using SurveyBasket.Api.Contracts.Polls;
-
-namespace SurveyBasket.Api.Contracts.Authentication
+﻿namespace SurveyBasket.Api.Contracts.Authentication
 {
     public class LoginRequestValidator : AbstractValidator<LoginRequest>
     {
@@ -10,6 +8,6 @@ namespace SurveyBasket.Api.Contracts.Authentication
             RuleFor(x => x.Password).NotEmpty().MaximumLength(100);
 
         }
-        
+
     }
 }

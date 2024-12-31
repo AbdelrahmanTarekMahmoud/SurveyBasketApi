@@ -6,4 +6,4 @@
             IEnumerable<string> roles, IEnumerable<string> permissions);
 
     }
-} 
+}

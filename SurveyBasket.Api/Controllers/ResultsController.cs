@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SurveyBasket.Api.Authentication.Filters;
+﻿using SurveyBasket.Api.Authentication.Filters;
 
 namespace SurveyBasket.Api.Controllers
 {
@@ -11,15 +9,15 @@ namespace SurveyBasket.Api.Controllers
     {
         private readonly IResultService _resultService = resultService;
 
-        [HttpGet("voteResult")]
-        public async Task<IActionResult> GetAllVotesResultInPoll([FromRoute] int pollId , CancellationToken cancellationToken)
+        [HttpGet("vote-result")]
+        public async Task<IActionResult> GetAllVotesResultInPoll([FromRoute] int pollId, CancellationToken cancellationToken)
         {
             var result = await _resultService.GetVoteResultsAsync(pollId, cancellationToken);
 
             return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
         }
-        [HttpGet("votePerDay")]
-        public async Task<IActionResult> GetVotesInDays([FromRoute] int pollId , CancellationToken cancellationToken)
+        [HttpGet("vote-per-day")]
+        public async Task<IActionResult> GetVotesInDays([FromRoute] int pollId, CancellationToken cancellationToken)
         {
             var result = await _resultService.GetVoteInDaysAsync(pollId, cancellationToken);
             return result.IsSuccess ? Ok(result.Value) : result.ToProblem();

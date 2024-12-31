@@ -1,11 +1,10 @@
-﻿using SurveyBasket.Api.Abstractions.Constants;
-using SurveyBasket.Api.Contracts.Roles;
+﻿using SurveyBasket.Api.Contracts.Roles;
 using System.Data;
 
 namespace SurveyBasket.Api.Services
 {
-    public class RoleService(ApplicationDbContext context 
-        ,RoleManager<ApplicationRole> roleManager) : IRoleService
+    public class RoleService(ApplicationDbContext context
+        , RoleManager<ApplicationRole> roleManager) : IRoleService
     {
         private readonly ApplicationDbContext _context = context;
         private readonly RoleManager<ApplicationRole> _roleManager = roleManager;
@@ -25,17 +24,17 @@ namespace SurveyBasket.Api.Services
                 .Where(x => !x.IsDefault && !x.IsDeleted)
                 .AsNoTracking()
                 .Select(x => x.Adapt<RoleResponse>())
-                .ToListAsync(cancellationToken);    
+                .ToListAsync(cancellationToken);
         }
 
         public async Task<Result<RoleDetailsResponse>> GetRoleByIdAsync(string id, CancellationToken cancellationToken = default)
         {
             var Role = await _roleManager.FindByIdAsync(id);
-            if(Role == null)
+            if (Role == null)
             {
                 return Result.Failure<RoleDetailsResponse>(RoleErrors.RoleNotFound);
             }
-            
+
             var Permission = await _roleManager.GetClaimsAsync(Role);
 
             var Response = new RoleDetailsResponse(Role.Id, Role.Name, Role.IsDeleted
@@ -48,15 +47,15 @@ namespace SurveyBasket.Api.Services
         public async Task<Result<RoleDetailsResponse>> AddRoleAsync(RolesRequest request, CancellationToken cancellationToken = default)
         {
             var IsRoleWithSameNameAlreadyExist = await _roleManager.FindByNameAsync(request.Name);
-            if(IsRoleWithSameNameAlreadyExist != null)
+            if (IsRoleWithSameNameAlreadyExist != null)
             {
                 return Result.Failure<RoleDetailsResponse>(RoleErrors.RoleDuplicated);
             }
 
             //make sure that request doesnt have a permissions that doenst exist in our permissions class
             var ExistedPermissions = Permissions.GetAllPermissions();
-            
-            if(request.Permissions.Except(ExistedPermissions).Any())
+
+            if (request.Permissions.Except(ExistedPermissions).Any())
             {
                 return Result.Failure<RoleDetailsResponse>(RoleErrors.RoleDuplicated);
             }
@@ -70,7 +69,7 @@ namespace SurveyBasket.Api.Services
             };
 
             var result = await _roleManager.CreateAsync(Role);
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 //converting permissions of request "string" to IdentityRoleClaim
                 var permissions = request.Permissions.Select(x => new IdentityRoleClaim<string>
@@ -84,21 +83,21 @@ namespace SurveyBasket.Api.Services
 
                 //Constructing the Response
                 var Response = new RoleDetailsResponse(Role.Id, Role.Name, Role.IsDeleted
-                ,request.Permissions);
-                
+                , request.Permissions);
+
                 return Result.Success(Response);
             }
 
             var error = result.Errors.FirstOrDefault();
-            return Result.Failure<RoleDetailsResponse>(new Error ( error.Code ,  error.Description  , StatusCodes.Status400BadRequest));
+            return Result.Failure<RoleDetailsResponse>(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
 
         }
 
-        public async Task<Result> UpdateRoleAsync(string id , RolesRequest request, CancellationToken cancellationToken = default)
+        public async Task<Result> UpdateRoleAsync(string id, RolesRequest request, CancellationToken cancellationToken = default)
         {
             var role = await _roleManager.FindByIdAsync(id);
 
-            if (role is  null)
+            if (role is null)
             {
                 return Result.Failure(RoleErrors.RoleNotFound);
             }
@@ -106,7 +105,7 @@ namespace SurveyBasket.Api.Services
             var IsRoleWithSameNameAlreadyExist = await _roleManager.Roles.AnyAsync(x => x.Name == request.Name
             && x.Id != id);
 
-            if(IsRoleWithSameNameAlreadyExist)
+            if (IsRoleWithSameNameAlreadyExist)
             {
                 return Result.Failure(RoleErrors.RoleDuplicated);
             }
@@ -126,7 +125,7 @@ namespace SurveyBasket.Api.Services
             {
                 // we used select to get only the value of claim
                 var CurrentPermissions = await _context.RoleClaims
-                    .Where(x => x.RoleId == id )
+                    .Where(x => x.RoleId == id)
                     .Select(x => x.ClaimValue).ToListAsync();
 
                 // those are the new permissions that need to be added 
@@ -136,9 +135,9 @@ namespace SurveyBasket.Api.Services
                     .Except(CurrentPermissions)
                     .Select(x => new IdentityRoleClaim<string>
                     {
-                    ClaimType = Permissions.Type,
-                    ClaimValue = x,
-                    RoleId = id
+                        ClaimType = Permissions.Type,
+                        ClaimValue = x,
+                        RoleId = id
                     });
 
                 //now we know the new permission "that doenst exist in db already"
@@ -161,8 +160,8 @@ namespace SurveyBasket.Api.Services
         public async Task<Result> ToggleIsDeletedStatusAsync(string id, CancellationToken cancellationToken = default)
         {
             var role = await _roleManager.FindByIdAsync(id);
-            
-            if(role is null)
+
+            if (role is null)
             {
                 return Result.Failure(RoleErrors.RoleNotFound);
             }

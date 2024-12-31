@@ -7,7 +7,7 @@ namespace SurveyBasket.Api.Errors
 
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
-            _logger.LogError(exception , "Something went wrong : {Message}" , exception.Message);
+            _logger.LogError(exception, "Something went wrong : {Message}", exception.Message);
 
             var problemDetails = new ProblemDetails
             {

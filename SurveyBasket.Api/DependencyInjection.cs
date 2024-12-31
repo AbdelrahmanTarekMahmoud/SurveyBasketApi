@@ -3,7 +3,6 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.RateLimiting;
 using SurveyBasket.Api.Authentication.Filters;
 using SurveyBasket.Api.Health;
-using System.Threading.RateLimiting;
 
 namespace SurveyBasket.Api
 {
@@ -20,7 +19,7 @@ namespace SurveyBasket.Api
             AddPolicy("Allow All",
             builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyHeader()));
 
-            services.AddSwagerServices();
+            //services.AddSwagerServices();
             services.AddMapsterServices();
             services.AddFluentValidationServices();
             services.AddAuthConfig(configuration);
@@ -109,7 +108,7 @@ namespace SurveyBasket.Api
             services.AddHealthChecks()
                 .AddDbContextCheck<ApplicationDbContext>(name: "DataBase")
                 .AddHangfire(options => options.MinimumAvailableServers = 1)
-                .AddCheck<MailServiceHealthChecker>(name : "Mail Service");
+                .AddCheck<MailServiceHealthChecker>(name: "Mail Service");
 
             //Versioning
             //services.AddApiVersioning(options =>
@@ -132,14 +131,18 @@ namespace SurveyBasket.Api
                 options.GroupNameFormat = "'v'V";
                 options.SubstituteApiVersionInUrl = true;
             });
+
+
+
+            services.AddEndpointsApiExplorer().AddOpenApi();
             return services;
         }
-        private static IServiceCollection AddSwagerServices(this IServiceCollection services)
-        {           
-            services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
-            return services;
-        }
+        //private static IServiceCollection AddSwagerServices(this IServiceCollection services)
+        //{           
+        //    services.AddEndpointsApiExplorer();
+        //    services.AddSwaggerGen();
+        //    return services;
+        //}
         private static IServiceCollection AddMapsterServices(this IServiceCollection services)
         {
             // for global config of mapster
@@ -162,8 +165,8 @@ namespace SurveyBasket.Api
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient<IAuthorizationHandler , PermissionAuthorizationHandler>();
-            services.AddTransient<IAuthorizationPolicyProvider ,  PermissionAuthorizationPolicyProvider>(); 
+            services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            services.AddTransient<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
             services.AddSingleton<IJwtProvider, JwtProvider>();
             //data annotaion validating in JwtOptions
             services.AddOptions<JwtOptions>().BindConfiguration(JwtOptions.SectionName).ValidateDataAnnotations()
@@ -205,7 +208,7 @@ namespace SurveyBasket.Api
             return services;
         }
 
-        private static IServiceCollection AddHangFireServices(this IServiceCollection services , IConfiguration configuration)
+        private static IServiceCollection AddHangFireServices(this IServiceCollection services, IConfiguration configuration)
         {
             // Add Hangfire services.
             services.AddHangfire(config => config

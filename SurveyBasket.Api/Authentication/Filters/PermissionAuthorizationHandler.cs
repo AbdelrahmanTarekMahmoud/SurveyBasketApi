@@ -7,14 +7,14 @@ namespace SurveyBasket.Api.Authentication.Filters
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
             var user = context.User.Identity;
-            if(user == null || !user.IsAuthenticated)
+            if (user == null || !user.IsAuthenticated)
             {
-                return; 
+                return;
             }
             var isUserAppliesReqs = context.User.Claims
                 .Any(x => x.Value == requirement.Permission);
 
-            if(!isUserAppliesReqs)
+            if (!isUserAppliesReqs)
             {
                 return;
             }

@@ -1,12 +1,11 @@
 ﻿
 using SurveyBasket.Api.Helper;
-using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace SurveyBasket.Api.Services
 {
-    public class NotificationService(ApplicationDbContext context ,
-        UserManager<ApplicationUser> userManager ,
-        IHttpContextAccessor httpContextAccessor , IEmailSender emailSender) : INotificationService
+    public class NotificationService(ApplicationDbContext context,
+        UserManager<ApplicationUser> userManager,
+        IHttpContextAccessor httpContextAccessor, IEmailSender emailSender) : INotificationService
     {
         private readonly ApplicationDbContext _context = context;
         private readonly UserManager<ApplicationUser> _userManager = userManager;
@@ -15,17 +14,18 @@ namespace SurveyBasket.Api.Services
 
         public async Task NewPollsNotification()
         {
-            var NewPolls = await _context.polls.Where(x=>x.IsPublished && 
+            var NewPolls = await _context.polls.Where(x => x.IsPublished &&
             x.StartsAt == DateOnly.FromDateTime(DateTime.UtcNow)).AsNoTracking().ToListAsync();
 
 
             //TODO SEND TO SPECIFIC USERS
-            var users = await _userManager.Users.ToListAsync();
+            //var users = await _userManager.Users.ToListAsync();
+            var users = await _userManager.GetUsersInRoleAsync(DefaultRoles.Member);
             var origin = _httpContextAccessor.HttpContext?.Request.Headers.Origin;
             foreach (var poll in NewPolls)
             {
-               foreach(var user in users)
-               {
+                foreach (var user in users)
+                {
                     var placeholder = new Dictionary<string, string>
                     {
                         {"{{name}}" , $"{user.FirstName} {user.LastName}"},
@@ -36,7 +36,7 @@ namespace SurveyBasket.Api.Services
 
                     var body = EmailBodyBuilder.GenerateEmailBody("PollNotification", placeholder);
                     await _emailSender.SendEmailAsync(user.Email!, "Survey BasNew Polls Notification", body);
-               }
+                }
             }
 
         }

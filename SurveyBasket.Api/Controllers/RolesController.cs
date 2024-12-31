@@ -29,7 +29,7 @@ namespace SurveyBasket.Api.Controllers
 
         [HttpGet("{id}")]
         [HasPermission(Permissions.GetRoles)]
-        public async Task<IActionResult> GetRoleById([FromRoute] string id ,CancellationToken cancellationToken)
+        public async Task<IActionResult> GetRoleById([FromRoute] string id, CancellationToken cancellationToken)
         {
             var result = await _roleService.GetRoleByIdAsync(id, cancellationToken);
 
@@ -44,24 +44,24 @@ namespace SurveyBasket.Api.Controllers
             var result = await _roleService.AddRoleAsync(request, cancellationToken);
 
             return result.IsSuccess ?
-                CreatedAtAction(nameof(GetRoleById), new { result.Value.Id }, result.Value) 
+                CreatedAtAction(nameof(GetRoleById), new { result.Value.Id }, result.Value)
                 : result.ToProblem();
         }
 
 
         [HttpPut("{id}")]
         [HasPermission(Permissions.UpdateRoles)]
-        public async Task<IActionResult> UpdateRole([FromRoute] string id,[FromBody] RolesRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateRole([FromRoute] string id, [FromBody] RolesRequest request, CancellationToken cancellationToken)
         {
-            var result = await _roleService.UpdateRoleAsync(id , request, cancellationToken);
+            var result = await _roleService.UpdateRoleAsync(id, request, cancellationToken);
 
             return result.IsSuccess ? NoContent() : result.ToProblem();
         }
 
 
-        [HttpPut("toggle/{id}")]
+        [HttpPut("{id}/toggle")]
         [HasPermission(Permissions.UpdateRoles)]
-        public async Task<IActionResult> ToggleIsDeletedStatus([FromRoute] string id,  CancellationToken cancellationToken)
+        public async Task<IActionResult> ToggleIsDeletedStatus([FromRoute] string id, CancellationToken cancellationToken)
         {
             var result = await _roleService.ToggleIsDeletedStatusAsync(id, cancellationToken);
 

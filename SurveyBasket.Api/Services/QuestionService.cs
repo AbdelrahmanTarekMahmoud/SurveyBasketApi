@@ -1,31 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SurveyBasket.Api.Contracts.Answers;
-using SurveyBasket.Api.Contracts.Common;
-using SurveyBasket.Api.Contracts.Questions;
-using System.Collections.Generic;
+﻿using SurveyBasket.Api.Contracts.Common;
 using System.Linq.Dynamic.Core;
 
 namespace SurveyBasket.Api.Services
 {
-    public class QuestionService(ApplicationDbContext context , ICacheService cacheService , ILogger<QuestionService> logger) : IQuestionService
+    public class QuestionService(ApplicationDbContext context, ICacheService cacheService, ILogger<QuestionService> logger) : IQuestionService
     {
         private readonly ApplicationDbContext _context = context;
         private readonly ICacheService _cacheService = cacheService;
         private readonly ILogger<QuestionService> _logger = logger;
         private const string _cachePrefix = "Questions";
 
-        public async Task<Result<QuestionResponse>> AddAsync(QuestionRequest questionRequest, int pollId,  CancellationToken cancellationToken = default)
+        public async Task<Result<QuestionResponse>> AddAsync(QuestionRequest questionRequest, int pollId, CancellationToken cancellationToken = default)
         {
             //Validating if the poll is existed or not
-            var isPollExisting = await _context.polls.AnyAsync(x => x.Id == pollId , cancellationToken);
-            if(!isPollExisting)
+            var isPollExisting = await _context.polls.AnyAsync(x => x.Id == pollId, cancellationToken);
+            if (!isPollExisting)
             {
                 return Result.Failure<QuestionResponse>(PollErrors.PollNotFound);
             }
             //Validating if the same poll has the same question or not
             var isPollHavingSameQuestionAlready = await _context.Questions.AnyAsync(x => x.Content == questionRequest.Content
-            && x.PollId == pollId , cancellationToken);
-            if(isPollHavingSameQuestionAlready)
+            && x.PollId == pollId, cancellationToken);
+            if (isPollHavingSameQuestionAlready)
             {
                 return Result.Failure<QuestionResponse>(QuestionsErrors.DuplicatedQuestion);
             }
@@ -33,22 +29,22 @@ namespace SurveyBasket.Api.Services
             var Question = questionRequest.Adapt<Question>();
             //Assigning the pollId
             Question.PollId = pollId;
-            
 
-            await _context.AddAsync(Question , cancellationToken);
+
+            await _context.AddAsync(Question, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
 
-            await _cacheService.RemoveAsync($"{_cachePrefix}-{pollId}" , cancellationToken);
+            await _cacheService.RemoveAsync($"{_cachePrefix}-{pollId}", cancellationToken);
 
             return Result.Success<QuestionResponse>(Question.Adapt<QuestionResponse>());
         }
 
-        public async Task<Result<PaginatedList<QuestionResponse>>> GetAllAsync(int pollId , RequestFilter pageFilter , CancellationToken cancellationToken = default)
+        public async Task<Result<PaginatedList<QuestionResponse>>> GetAllAsync(int pollId, RequestFilter pageFilter, CancellationToken cancellationToken = default)
         {
             var isPollExisting = await _context.polls.AnyAsync(x => x.Id == pollId, cancellationToken);
             if (!isPollExisting)
             {
-                return Result.Failure<PaginatedList< QuestionResponse >> (PollErrors.PollNotFound);
+                return Result.Failure<PaginatedList<QuestionResponse>>(PollErrors.PollNotFound);
             }
 
             //include for eager loading the answers
@@ -62,31 +58,31 @@ namespace SurveyBasket.Api.Services
             var resultQuery = query.Include(x => x.Answers)
                 .Select(x => x.Adapt<QuestionResponse>())
                 .AsNoTracking();
-                
 
-                // .Include(x => x.Answers)
-                //.AsNoTracking()
-                //.Select(x => x.Adapt<QuestionResponse>());
 
-                //Manuel it will be like this
-                /*
-                 * var query = _context.Questions
-                             .Where(x => x.PollId == pollId)
-                                .Include(x => x.Answers)
-                            .AsNoTracking()
-                            .Select(x => new QuestionResponse(
-                                x.Id,
-                            x.Content,
-                            x.Answers
-                            .Where(a => a.isActive) // Optional: Include only active answers
-                            .Select(a => new AnswerResponse(
-                                a.Id,
-                                a.Content
-                                ))
-                            ));
-                 */
-                var response = await PaginatedList<QuestionResponse>
-                           .CreateListAsync(resultQuery, pageFilter.PageNumber, pageFilter.PageSize, cancellationToken);
+            // .Include(x => x.Answers)
+            //.AsNoTracking()
+            //.Select(x => x.Adapt<QuestionResponse>());
+
+            //Manuel it will be like this
+            /*
+             * var query = _context.Questions
+                         .Where(x => x.PollId == pollId)
+                            .Include(x => x.Answers)
+                        .AsNoTracking()
+                        .Select(x => new QuestionResponse(
+                            x.Id,
+                        x.Content,
+                        x.Answers
+                        .Where(a => a.isActive) // Optional: Include only active answers
+                        .Select(a => new AnswerResponse(
+                            a.Id,
+                            a.Content
+                            ))
+                        ));
+             */
+            var response = await PaginatedList<QuestionResponse>
+                       .CreateListAsync(resultQuery, pageFilter.PageNumber, pageFilter.PageSize, cancellationToken);
             return Result.Success<PaginatedList<QuestionResponse>>(response);
         }
 
@@ -95,7 +91,7 @@ namespace SurveyBasket.Api.Services
             //include for eager loading the answers
             var Question = await _context.Questions.Where(x => x.PollId == pollId && x.Id == questionId).Include(x => x.Answers)
                 .AsNoTracking().Select(x => x.Adapt<QuestionResponse>()).SingleOrDefaultAsync(cancellationToken);
-            if(Question is null)
+            if (Question is null)
             {
                 return Result.Failure<QuestionResponse>(QuestionsErrors.QuestionNoFound);
             }
@@ -104,12 +100,12 @@ namespace SurveyBasket.Api.Services
 
 
 
-        public async Task<Result<IEnumerable<QuestionResponse>>> GetAvailableAsync(int pollId, string userId , CancellationToken cancellationToken = default)
+        public async Task<Result<IEnumerable<QuestionResponse>>> GetAvailableAsync(int pollId, string userId, CancellationToken cancellationToken = default)
         {
             //checking if the user already voted in this poll
             var isUserAlreadyVotedToPoll = await _context.Votes.AnyAsync
-                (x=>x.PollId == pollId && x.UserId == userId , cancellationToken);
-            if(isUserAlreadyVotedToPoll)
+                (x => x.PollId == pollId && x.UserId == userId, cancellationToken);
+            if (isUserAlreadyVotedToPoll)
             {
                 return Result.Failure<IEnumerable<QuestionResponse>>(VoteErrors.DuplicatedVote);
             }
@@ -118,7 +114,7 @@ namespace SurveyBasket.Api.Services
                 && x.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow)
                 && x.EndsAt >= DateOnly.FromDateTime(DateTime.UtcNow)
                 , cancellationToken);
-            if(!isPollExist)
+            if (!isPollExist)
             {
                 return Result.Failure<IEnumerable<QuestionResponse>>(PollErrors.PollNotFound);
             }
@@ -131,17 +127,17 @@ namespace SurveyBasket.Api.Services
             {
                 _logger.LogInformation("From DataBase");
                 //filter available questions(is active && in this poll) and filter withing the answers that is (is acitve = true)
-                     AvailableQuestion = await _context.Questions
-                    .Where(x => x.PollId == pollId && x.isActive)
-                    .Include(x => x.Answers)
-                    .Select(x => new QuestionResponse(
+                AvailableQuestion = await _context.Questions
+               .Where(x => x.PollId == pollId && x.isActive)
+               .Include(x => x.Answers)
+               .Select(x => new QuestionResponse(
 
-                         x.Id,
-                         x.Content,
-                         x.Answers.Where(x => x.isActive).Select(x => new Contracts.Answers.AnswerResponse(x.Id, x.Content))
-                    ))
-                    .AsNoTracking()
-                    .ToListAsync(cancellationToken);
+                    x.Id,
+                    x.Content,
+                    x.Answers.Where(x => x.isActive).Select(x => new Contracts.Answers.AnswerResponse(x.Id, x.Content))
+               ))
+               .AsNoTracking()
+               .ToListAsync(cancellationToken);
 
                 await _cacheService.SetAsync(cachKey, AvailableQuestion, cancellationToken);
             }
@@ -158,7 +154,7 @@ namespace SurveyBasket.Api.Services
 
         public async Task<Result> ToggleActiveStatus(int pollId, int questionId, CancellationToken cancellationToken = default)
         {
-            var question = await _context.Questions.SingleOrDefaultAsync(x=>x.PollId == pollId && x.Id == questionId);
+            var question = await _context.Questions.SingleOrDefaultAsync(x => x.PollId == pollId && x.Id == questionId);
             if (question is null) return Result.Failure(QuestionsErrors.QuestionNoFound);
             question.isActive = !question.isActive;
             await _context.SaveChangesAsync(cancellationToken);
@@ -172,7 +168,7 @@ namespace SurveyBasket.Api.Services
         {
             //Validating if its same poll same content its cannot be same questionId
             var IsQuestionAlreadyExist = await _context.Questions.
-                AnyAsync(x => x.PollId == pollId 
+                AnyAsync(x => x.PollId == pollId
                       && x.Id != questionId
                       && x.Content == questionRequest.Content, cancellationToken);
 
@@ -182,8 +178,8 @@ namespace SurveyBasket.Api.Services
             }
             //At this point iam sure that no duplicated question can be happen accidentally
             //so i will check now if there is a qustion has the criteria i am looking for
-            var question =await  _context.Questions.Include(x => x.Answers)
-                .SingleOrDefaultAsync(x=>x.PollId ==pollId && x.Id == questionId , cancellationToken);
+            var question = await _context.Questions.Include(x => x.Answers)
+                .SingleOrDefaultAsync(x => x.PollId == pollId && x.Id == questionId, cancellationToken);
 
             if (question is null)
             {
@@ -200,7 +196,7 @@ namespace SurveyBasket.Api.Services
             //case 3 : answer that in both(Stay same)
 
             //current answers(Exists already in Db)
-            var AnswersInDataBase = question.Answers.Select(x=>x.Content).ToList();
+            var AnswersInDataBase = question.Answers.Select(x => x.Content).ToList();
 
             //extract the answers that is new and not in Db
             var NewAnswers = questionRequest.Answers.Except(AnswersInDataBase).ToList();

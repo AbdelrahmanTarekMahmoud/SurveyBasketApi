@@ -5,5 +5,5 @@
         string CurrentPassword,
         string NewPassword
     );
-    
+
 }

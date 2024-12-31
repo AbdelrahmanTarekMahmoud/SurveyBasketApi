@@ -17,5 +17,5 @@
                 .When(x => x.Roles != null);
 
         }
-    } 
+    }
 }

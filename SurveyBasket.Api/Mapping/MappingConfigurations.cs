@@ -22,8 +22,8 @@ namespace SurveyBasket.Api.Mapping
             config.NewConfig<CreateUserRequest, ApplicationUser>()
                 .Map(dest => dest.UserName, src => src.Email)
                 .Map(dest => dest.EmailConfirmed, src => true);
-                
-                
+
+
 
         }
     }

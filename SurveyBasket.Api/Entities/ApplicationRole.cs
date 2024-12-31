@@ -4,6 +4,6 @@
     {
         public bool IsDefault { get; set; }
         //soft delete
-        public bool IsDeleted { get; set; } 
+        public bool IsDeleted { get; set; }
     }
 }

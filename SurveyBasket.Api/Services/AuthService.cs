@@ -1,18 +1,11 @@
-﻿
-
-using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.WebUtilities;
-using SurveyBasket.Api.Errors;
+﻿using Microsoft.AspNetCore.WebUtilities;
 using SurveyBasket.Api.Helper;
-using System.Text;
-using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace SurveyBasket.Api.Services
 {
-    public class AuthService(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager 
-        ,IJwtProvider jwtProvider , ILogger<AuthService> logger , IEmailSender emailSender
-        ,IHttpContextAccessor httpContextAccessor , ApplicationDbContext context) : IAuthService
+    public class AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager
+        , IJwtProvider jwtProvider, ILogger<AuthService> logger, IEmailSender emailSender
+        , IHttpContextAccessor httpContextAccessor, ApplicationDbContext context) : IAuthService
     {
         private readonly UserManager<ApplicationUser> _userManager = userManager;
         private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
@@ -26,13 +19,13 @@ namespace SurveyBasket.Api.Services
         {
             //Check user existance
             var user = await _userManager.FindByEmailAsync(Email);
-            if (user is null) 
-            { 
-               return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
+            if (user is null)
+            {
+                return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
             }
 
             //added in sec 25
-            if(user.IsDisabled)
+            if (user.IsDisabled)
             {
                 return Result.Failure<AuthResponse>(UserErrors.UserIsDisabled);
             }
@@ -46,8 +39,8 @@ namespace SurveyBasket.Api.Services
             //{ 
             //    return  Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);  
             //}
-            var result = await _signInManager.PasswordSignInAsync(user , Password, false , true);
-            
+            var result = await _signInManager.PasswordSignInAsync(user, Password, false, true);
+
             if (result.Succeeded)
             {
                 var UserRoles = await _userManager.GetRolesAsync(user);
@@ -61,7 +54,7 @@ namespace SurveyBasket.Api.Services
                     .ToListAsync(cancellationToken);
 
                 //Generate Token
-                var (token, expireIn) = _jwtProvider.GenerateToken(user , UserRoles , Permissions);
+                var (token, expireIn) = _jwtProvider.GenerateToken(user, UserRoles, Permissions);
                 var response = new AuthResponse(user.Id, user.Email, user.FirstName, user.LastName, token, expireIn);
                 return Result.Success<AuthResponse>(response);
             }
@@ -74,15 +67,15 @@ namespace SurveyBasket.Api.Services
                 : result.IsLockedOut ? UserErrors.UserIsLockedOut : UserErrors.InvalidCredentials;
 
             return Result.Failure<AuthResponse>(error);
-            
+
         }
 
         public async Task<Result> RegisterAsync(RegisterRequest registerRequest, CancellationToken cancellationToken = default)
         {
-            var IsEmailExist = await _userManager.Users.AnyAsync(x => x.Email == registerRequest.Email , cancellationToken);
-            if(IsEmailExist)
+            var IsEmailExist = await _userManager.Users.AnyAsync(x => x.Email == registerRequest.Email, cancellationToken);
+            if (IsEmailExist)
             {
-                return Result.Failure(UserErrors.AlreadyRegisteredEmail); 
+                return Result.Failure(UserErrors.AlreadyRegisteredEmail);
             }
 
             var user = new ApplicationUser
@@ -96,13 +89,13 @@ namespace SurveyBasket.Api.Services
             var result = await _userManager.CreateAsync(user, registerRequest.Password);
 
             //send confirmation code
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                _logger.LogInformation("Conformation Code is : {c}" , code);
+                _logger.LogInformation("Conformation Code is : {c}", code);
 
-                
+
                 await SendConfirmationEmail(user, code);
 
 
@@ -112,7 +105,7 @@ namespace SurveyBasket.Api.Services
             var error = result.Errors.First();
 
 
-            return Result.Failure(new Error(error.Code , error.Description , StatusCodes.Status400BadRequest  ));
+            return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
         }
 
 
@@ -157,7 +150,7 @@ namespace SurveyBasket.Api.Services
         {
             var user = await _userManager.FindByEmailAsync(resendEmailConfirmationRequest.Email);
             //dont give the user info about "there is no existed email with this email"
-            if(user is null)
+            if (user is null)
             {
                 return Result.Success();
             }
@@ -173,7 +166,7 @@ namespace SurveyBasket.Api.Services
         }
 
         //helper method
-        public async Task SendConfirmationEmail(ApplicationUser user , string code)
+        public async Task SendConfirmationEmail(ApplicationUser user, string code)
         {
             //https:/./surveybasket.com
             var origin = _httpContextAccessor.HttpContext?.Request.Headers.Origin;
@@ -184,20 +177,20 @@ namespace SurveyBasket.Api.Services
                     {"{{name}}" , user.FirstName},
                         {"{{action_url}}" , $"{origin}/auth/emailConfirmation?userId={user.Id}&code={code}"}
                 });
-            BackgroundJob.Enqueue(() => _emailSender.SendEmailAsync(user.Email!, "Survey Basket Confirmation Email", emailBody)); 
+            BackgroundJob.Enqueue(() => _emailSender.SendEmailAsync(user.Email!, "Survey Basket Confirmation Email", emailBody));
             await Task.CompletedTask;
         }
 
         public async Task<Result> SendForgetPasswordCode(ForgetPasswordRequest request, CancellationToken cancellationToken = default)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
-            if(user is null)
+            if (user is null)
             {
                 //misleading
                 return Result.Success();
             }
 
-            if(!user.EmailConfirmed)
+            if (!user.EmailConfirmed)
             {
                 return Result.Failure(UserErrors.EmailNotConfirmed);
             }
@@ -229,9 +222,9 @@ namespace SurveyBasket.Api.Services
 
         public async Task<Result> ResetPasswordForForgettingPassword(ResetPasswordRequest request, CancellationToken cancellationToken = default)
         {
-          
+
             var user = await _userManager.FindByEmailAsync(request.Email);
-            if(user is null || !user.EmailConfirmed)
+            if (user is null || !user.EmailConfirmed)
             {
                 Result.Failure(UserErrors.InvalidCode);
             }
@@ -242,7 +235,7 @@ namespace SurveyBasket.Api.Services
                 var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(request.Code));
                 result = await _userManager.ResetPasswordAsync(user, code, request.NewPassword);
             }
-            catch(FormatException)
+            catch (FormatException)
             {
                 result = IdentityResult.Failed(_userManager.ErrorDescriber.InvalidToken());
             }

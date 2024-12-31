@@ -5,10 +5,6 @@ D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\SurveyBas
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\SurveyBasket.Api.runtimeconfig.json
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\SurveyBasket.Api.dll
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\SurveyBasket.Api.pdb
-D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Microsoft.OpenApi.dll
-D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
-D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
-D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\obj\Debug\net8.0\SurveyBasket.Api.csproj.AssemblyReference.cache
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\obj\Debug\net8.0\SurveyBasket.Api.GeneratedMSBuildEditorConfig.editorconfig
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\obj\Debug\net8.0\SurveyBasket.Api.AssemblyInfoInputs.cache
@@ -204,3 +200,7 @@ D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Asp.Versi
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Asp.Versioning.Http.dll
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Asp.Versioning.Mvc.dll
 D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\Asp.Versioning.Mvc.ApiExplorer.dll
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\bin\Debug\net8.0\SurveyBasket.Api.staticwebassets.endpoints.json
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\obj\Debug\net8.0\staticwebassets\msbuild.SurveyBasket.Api.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+D:\Abdo\SurveyBasketAPI\SurveyBasket\SurveyBasket.Api\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

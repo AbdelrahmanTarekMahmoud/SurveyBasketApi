@@ -2,8 +2,8 @@
 {
     public static class UserErrors
     {
-        public static readonly Error  InvalidCredentials = 
-         new("User.InvalidCredentials", "Invalid UserName / Password" , StatusCodes.Status401Unauthorized);
+        public static readonly Error InvalidCredentials =
+         new("User.InvalidCredentials", "Invalid UserName / Password", StatusCodes.Status401Unauthorized);
 
         public static readonly Error AlreadyRegisteredEmail =
          new("User.AlreadyRegisteredEmail", "This Email already registered", StatusCodes.Status409Conflict);

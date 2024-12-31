@@ -8,5 +8,5 @@
         DateTime VoteDate,
         IEnumerable<QuestionAnswerResponse> SelectedAnswers
         );
-    
+
 }

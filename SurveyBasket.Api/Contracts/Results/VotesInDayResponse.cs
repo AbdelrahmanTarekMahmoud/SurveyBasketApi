@@ -4,5 +4,5 @@
     (
         DateOnly Date,
         int NumberOfVotes
-        ); 
+        );
 }

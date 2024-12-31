@@ -4,7 +4,7 @@
     {
         public VoteAnswerRequestValidator()
         {
-            RuleFor(x=>x.QuestionId).GreaterThan(0);
+            RuleFor(x => x.QuestionId).GreaterThan(0);
             RuleFor(x => x.AnswerId).GreaterThan(0);
         }
     }
